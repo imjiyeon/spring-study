@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}"> <!-- 템플릿 조각 전달 -->
+	<th:block th:fragment="content"> <!-- 템플릿 만들기 -->
+		<h1>Main Page</h1>
+	</th:block>
+</th:block>

@@ -1,0 +1,36 @@
+<!-- 템플릿 레이아웃 -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<style>
+    .header {
+        height: 20vh;
+        background-color: aqua;  /* pink로 변경 */
+    }
+    .content {
+        height: 30vh;
+        background-color: lightgray;
+    }
+    .footer {
+        height: 10vh;
+        background-color: green;
+    }
+</style>
+
+<body>
+
+<div class="header">
+    <h1>HEADER</h1>
+</div>
+<div class="content" >
+    <th:block th:replace = "~{layout/fragment :: frag2}"></th:block>
+</div>
+<div class="footer">
+    <h1>FOOTER</h1>
+</div>
+
+</body>
+</html>
+
+<!-- 이방식을 사용하면 공통영역이 중복된다. 만약 공통영역이 변경된다면 2페이지를 모두 수정해야 한다 -->

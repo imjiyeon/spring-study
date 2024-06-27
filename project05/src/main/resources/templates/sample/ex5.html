@@ -1,0 +1,20 @@
+<!-- 타임리프의 표현식 사용하기 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>List</h1>
+
+    [[${list}]]
+
+	<!-- 리스트에서 요소 하나씩 꺼내기 -->
+    <p>첫번째 요소 : [[${list[0]}]]</p>
+    <p>두번째 요소 : [[${list[1]}]]</p>
+    <p>세번째 요소 : [[${list.get(2)}]]</p>
+
+</body>
+</html>

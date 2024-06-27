@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 10px 30px;
+    }
+    table {
+     border-collapse: collapse;
+    }
+  </style>
+</head>
+<body>
+
+<table>
+  <tr>
+    <th>이름</th>
+    <th>나이</th>
+    <th>주소</th>
+  </tr>
+  
+  <th:block th:each="dto : ${list}">
+    <tr>
+      <td>[[${dto.name}]]</td>
+      <td>[[${dto.age}]]</td>
+      <td>[[${dto.address}]]</td>
+    </tr>
+  </th:block>
+  
+</table>
+
+</body>
+</html>

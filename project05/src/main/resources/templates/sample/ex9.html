@@ -1,0 +1,25 @@
+<!-- thymeleaf의 inline 속성 사용하기 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!-- 인라인 사용 전 -->
+    <script>
+		//인라인을 사용하지 않았을 때 발생하는 문제점: 데이터를 순수하게 그대로 해석함
+        var msg = [[${result}]]; //success 에러남!
+        var dto = [[${dto}]]; //SampleDTO(no=1, text=aaa, regDate=2024-05-28)
+    </script>
+    
+    <!-- 인라인 사용 후 -->
+    <script th:inline="javascript">
+		//자바스크립트 자료형에 맞게 변환해줘서 바로 사용 가능함
+        var msg = [[${result}]]; //"success" 문자열로 변환됨
+        var dto = [[${dto}]]; //{"no":1,"text":"aaa","regDate":"2024-05-28"} json으로 변환됨
+        console.log(dto.text);
+    </script>
+</body>
+</html>

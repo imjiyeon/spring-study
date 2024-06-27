@@ -1,0 +1,21 @@
+<!-- 타임리프의 표현식 사용하기 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <h1>Object</h1>
+
+    [[${dto}]]
+    
+	<!-- dto 객체의 프로퍼티에 접근 -->
+    <p>글번호 : [[${dto.no}]]</p>
+    <p>글내용 : [[${dto['text']}]]</p>
+    <p>등록일 : [[${dto.getRegDate()}]]</p>
+</body>
+
+</html>

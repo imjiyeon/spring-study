@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- 1. 서버에서 전달받은 데이터 확인 -->
+[[${arr[0]}]]
+[[${arr[1]}]]
+[[${arr[2]}]]
+[[${arr[3]}]]
+[[${arr[4]}]]
+[[${arr[5]}]]
+[[${arr[6]}]]
+[[${arr[7]}]]
+[[${arr[8]}]]
+[[${arr[9]}]]
+
+<br>
+
+<!-- 2. 반복문을 사용해서 데이터 하나씩 꺼내기 -->
+<th:block th:each="num : ${arr}">
+    <span th:text="${num}"></span>
+</th:block>
+
+<br>
+
+<!-- 3. 조건문을 사용해서 짝수일때만 출력하기 -->
+<th:block th:each="num : ${arr}">
+    <span th:if="${num%2 == 0}" th:text="${num}"></span>
+</th:block>
+
+</body>
+</html>

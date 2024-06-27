@@ -1,0 +1,40 @@
+<!-- thymeleaf의 기본객체 사용하기 -->
+<!-- 실습파일에서 복사해서 가져오기~! 오타가 너무 많이남.. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>문자열객체</h1>
+    <ul>
+        <li>aBC에 a가 포함되었는지 : [[${#strings.contains('aBC', 'a')}]]</li>
+        <li>aBC가 b로 시작되었는지 : [[${#strings.startsWith('aBC', 'b')}]]</li>
+        <li>aBC를 인덱스 2부터3전까지 자르기 : [[${#strings.substring('aBC', 2, 3)}]]</li>
+        <li>aBC에서 a를b로바꾸기 : [[${#strings.replace('aBC', 'a', 'b')}]]</li>
+        <li>aBC를 대문자로 변환 : [[${#strings.toUpperCase('aBC')}]]</li>
+        <li>aBC를 소문자로 변환 : [[${#strings.toLowerCase('aBC')}]]</li>
+    </ul>
+
+    <h1>숫자객체</h1>
+    <ul>
+        <li>자리수만큼 0으로 채워서 출력 : [[${#numbers.formatInteger(1,5)}]]</li>
+        <li>패턴을 지정하여 출력 : [[${#numbers.formatInteger(100000,3,'POINT')}]]</li>
+        <li>화폐단위로 출력 : [[${#numbers.formatCurrency(100)}]]</li>
+        <li>퍼센트단위로 출력 : [[${#numbers.formatPercent(0.2,2,0)}]]</li> <!-- 0~1사이 숫자, 정수자리수, 소수자리수 -->
+    </ul>
+
+    <h1>날짜객체</h1>
+    <ul>
+        <li>현재날짜 : [[${date}]]</li>
+        <li>현재날짜를 특정패턴으로 출력 : [[${#temporals.format(date, 'yyyy-MM-dd')}]]</li>
+        <li>현재시간을 특정패턴으로 출력 : [[${#temporals.format(date, 'hh시mm분ss초')}]]</li>
+        <!--  날짜에서 특정값 추출하기  -->
+        <li>연도 : [[${#temporals.year(date)}]]</li>
+        <li>월 : [[${#temporals.month(date)}]]</li>
+        <li>일 : [[${#temporals.day(date)}]]</li>
+    </ul>
+</body>
+</html>

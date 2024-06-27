@@ -1,0 +1,37 @@
+<!-- 템플릿 레이아웃 만들기 (조각 가져오기) -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<style>
+    .header {
+        height: 20vh;
+        background-color: aqua;  /* pink로 변경 */
+    }
+    .content {
+        height: 30vh;
+        background-color: lightgray;
+    }
+    .footer {
+        height: 10vh;
+        background-color: green;
+    }
+</style>
+
+<body>
+
+<div class="header">
+    <h1>HEADER</h1>
+</div>
+<div class="content" >
+    <!-- fragment.html 파일의 frag1 블록 가져오기 -->
+    <!-- ~{} : 조각표현식 -->
+    <!-- th:replace : 가져온 조각으로 기존의 내용을 교체함 -->
+    <th:block th:replace = "~{layout/fragment :: frag1}"></th:block>
+</div>
+<div class="footer">
+    <h1>FOOTER</h1>
+</div>
+
+</body>
+</html>

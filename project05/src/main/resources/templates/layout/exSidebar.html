@@ -1,0 +1,18 @@
+<!-- 조각을 파라미터로 전달하기 -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 문서 안에 있는 조각을 basic 페이지에 전달한다 -->
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content"> <!-- 조각만들기 -->
+
+        <h1>exSidebar Page</h1>
+
+    </th:block>
+
+</th:block>
+
+
+

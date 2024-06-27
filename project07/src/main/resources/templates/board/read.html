@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+        <h1 class="mt-4">Board Read Page</h1>
+
+        <div class="form-group">
+            <label >번호</label>
+            <!-- th:value : 타임리프의 출력기능을 사용해서 모든 게시물 정보 출력하기 -->
+            <!-- 값을 변경할 수 없도록 readonly로 설정 -->
+            <input type="text" class="form-control" th:value="${dto.no}" readonly >
+        </div>
+
+        <div class="form-group">
+            <label >제목</label>
+            <input type="text" class="form-control" th:value="${dto.title}" readonly >
+        </div>
+        <div class="form-group">
+            <label >내용</label>
+            <textarea class="form-control" rows="5" readonly>[[${dto.content}]]</textarea>
+        </div>
+        <div class="form-group">
+            <label >작성자</label>
+            <input type="text" class="form-control" th:value="${dto.writer}" readonly>
+        </div>
+        <div class="form-group">
+            <label >등록일</label>
+            <!-- 날짜 패턴 지정 -->
+            <input type="text" class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
+        </div>
+        <div class="form-group">
+            <label >수정일</label>
+            <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
+        </div>
+
+        <!-- 버튼을 클릭하면 수정화면으로 이동 -->
+        <a th:href="@{/board/modify(no = ${dto.no})}"> <!-- (키=값) 부분은 파라미터로 (?no=1) 처리됨 -->
+        	<button type="button" class="btn btn-primary">수정</button>
+        </a>
+
+        <!-- 버튼을 클릭하면 목록화면으로 이동 -->
+        <a th:href="@{/board/list}">
+        	<button type="button" class="btn btn-info">목록으로</button>
+        </a>
+
+    </th:block>
+
+</th:block>

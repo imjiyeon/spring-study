@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+
+	<th:block th:fragment="content">
+
+		<h1>Board List Page
+		 	<span>
+                <a th:href="@{/board/register}">
+                    <button type="button" class="btn btn-outline-primary">게시물 등록</button>
+                </a>
+            </span>
+		</h1>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>등록일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="dto : ${list}">
+					<th> <!-- 상세조회 링크 수정 -->
+						<a th:href="@{/board/read(no = ${dto.no}, page= ${list.number + 1})}">
+							[[${dto.no}]]
+						</a>
+					</th>
+					<td>[[${dto.title}]]</td>
+					<td>[[${dto.writer}]]</td>
+					<td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
+				</tr>
+
+			</tbody>
+		</table>
+
+		<!-- 페이지 번호 목록 만들기 -->
+<!--		<ul class="pagination h-100 justify-content-center align-items-center">
+			<li class="page-item active">
+				<a class="page-link" href="">1</a>
+			</li>
+			<li class="page-item">
+				<a class="page-link" href="">2</a>
+			</li>
+			<li class="page-item">
+				<a class="page-link" href="">3</a>
+			</li>
+		</ul>-->
+
+		<!-- 전달받은 페이지 정보로 번호 목록 만들기 -->
+<!--		<th:block th:each="page : ${#numbers.sequence(1, list.totalPages)}">
+			[[${page}]]
+		</th:block>-->
+
+		<!-- 페이지 번호 목록에 적용하기 -->
+		<!-- 현재 페이지 여부를 체크해서 'active' 클래스 추가 -->
+<!--		<ul class="pagination h-100 justify-content-center align-items-center">
+			<th:block th:each="page : ${#numbers.sequence(1, list.totalPages)}">
+				&lt;!&ndash; 조건을 만족하는 경우 &ndash;&gt;
+				<th:block th:if="${list.number+1 == page}">
+					<li class="page-item active">
+						<a class="page-link" href="">[[${page}]]</a>
+					</li>
+				</th:block>
+				&lt;!&ndash; 조건을 만족하지 않는 경우 &ndash;&gt;
+				<th:block th:unless="${list.number+1 == page}">
+					<li class="page-item">
+						<a class="page-link" href="">[[${page}]]</a>
+					</li>
+				</th:block>
+			</th:block>
+		</ul>-->
+
+		<!-- 클릭한 페이지 번호로 이동하도록 링크 처리 -->
+		<ul class="pagination h-100 justify-content-center align-items-center">
+			<th:block th:each="page : ${#numbers.sequence(1, list.totalPages)}">
+				<th:block th:if="${list.number+1 == page}">
+					<li class="page-item active">
+						<!-- 리스트 주소 입력하고, 페이지번호를 파라미터로 전달 -->
+						<a class="page-link" th:href="@{/board/list(page = ${page})}">[[${page}]]</a>
+					</li>
+				</th:block>
+				<th:block th:unless="${list.number+1 == page}">
+					<li class="page-item">
+						<!-- 리스트 주소 입력하고, 페이지번호를 파라미터로 전달 -->
+						<a class="page-link" th:href="@{/board/list(page = ${page})}">[[${page}]]</a>
+					</li>
+				</th:block>
+			</th:block>
+		</ul>
+
+		<script th:inline="javascript">
+			$(document).ready(function(){
+			  var msg = [[${msg}]]
+			  if(msg != null){
+				  alert(msg + "번 글이 등록되었습니다.");
+			  }
+			});
+		</script>
+
+	</th:block>
+
+</th:block>

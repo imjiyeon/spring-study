@@ -1,0 +1,17 @@
+<!-- 동적 페이지 만들기 -->
+
+<!DOCTYPE html>
+<!-- 타임리프를 사용하기 위해 네임스페이스 선언 -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <!-- HTML태그의 속성에 'th:' 붙이고, 변수표현식 사용 -->
+    <h1 th:text="${msg}"></h1> <!-- 컨트롤러에서 전달한 데이터가 출력됨 -->
+</body>
+
+</html>

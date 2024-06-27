@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .target {
+     background: yellow;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 조건문을 사용하여, 5의 배수일 때는 css의 클래스를 지정한다 -->
+<ul>
+	<th:block th:each="dto : ${list}">
+		<li th:class="${dto.no%5==0}?target" th:text="${dto}"></li>
+	</th:block>	  
+</ul>
+</body>
+</html>

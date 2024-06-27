@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+        <h1 class="mt-4">Board Read Page</h1>
+
+        <div class="form-group">
+            <label >번호</label>
+            <input type="text" class="form-control" th:value="${dto.no}" readonly >
+        </div>
+
+        <div class="form-group">
+            <label >제목</label>
+            <input type="text" class="form-control" th:value="${dto.title}" readonly >
+        </div>
+        <div class="form-group">
+            <label >내용</label>
+            <textarea class="form-control" rows="5" readonly>[[${dto.content}]]</textarea>
+        </div>
+        <div class="form-group">
+            <label >작성자</label>
+            <input type="text" class="form-control" th:value="${dto.writer}" readonly>
+        </div>
+        <div class="form-group">
+            <label >등록일</label>
+            <input type="text" class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
+        </div>
+        <div class="form-group">
+            <label >수정일</label>
+            <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
+        </div>
+
+        <!-- 댓글 추가 -->
+        <div class="card shadow mb-4" style="margin-top:10px">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">댓글보기</h6>
+            </div>
+
+            <div class="card-body" id="commentdiv">
+
+            </div>
+
+            <div class="card-body">
+                <textarea class="form-control" id="commentContent" rows="3"></textarea>
+                <button type="button" class="btn btn-secondary" onclick="registerComment()">댓글등록</button> <!-- 주소 수정 -->
+            </div>
+        </div>
+        <!-- 댓글 끝 -->
+
+        <a th:href="@{/board/modify(no = ${dto.no})}">
+        	<button type="button" class="btn btn-primary">수정</button>
+        </a>
+
+        <a th:href="@{/board/list(page=${page})}">
+            <button type="button" class="btn btn-info">목록으로</button>
+        </a>
+
+        <!-- 댓글 이벤트 처리 -->
+        <script th:inline="javascript">
+
+        	$(document).ready(function() {
+        		showComment();
+        	})
+
+        	function showComment(){
+        		 var board = [[${dto}]];
+        		 let comment_div = $('#commentdiv');
+
+     		     $.ajax({
+     		      type: "GET",
+     		      url: "/comment/list?boardNo="+board.no,
+     		      success: function(response){
+     		    	  if(response){
+     		    		  comment_div.empty(); //자식 엘리먼트 모두 지우기
+     		    		  commentlist = response;
+     		    		  for(i in commentlist){
+     		    			 let comment = commentlist[i];
+     		    			 let writer_span = '<span class="fw-bold strong mar">'+comment.writer+'</span>';
+     		    			 let content_span = '<span class="mar"> '+comment.content+' </span>';
+     		    			 let href = '/comment/remove?commentNo='+comment.commentNo;
+     		    			 let delete_btn = '<a href="javascript:removeComment('+comment.commentNo+')">삭제</a>';
+     		    			 let comment_html = writer_span + content_span + delete_btn + '</br>';
+     		    			 comment_div.append(comment_html);
+     		    		  }
+     		    	  }
+     		        }
+     		      })
+        	}
+
+        	function registerComment() {
+        		var board = [[${dto}]];
+        		let commentContent = document.getElementById("commentContent");
+        		let commentDto =
+        		{
+        				'commentNo':0,
+        				'boardNo': board.no,
+        				'content': commentContent.value
+        		}
+        		 $.ajax({
+        		      type: "POST",
+        		      url: "/comment/register",
+        		      data: commentDto,
+        		      success: function(response){
+        		    	  if(response.success){
+        		    		  commentContent.value = null;
+        		    		  showComment();
+        		    	  }
+        		        }
+        		      })
+	    	}
+
+        	function removeComment(commentNo){
+        		var board = [[${dto}]];
+        		 $.ajax({
+        		      type: "GET",
+        		      url: "/comment/remove?commentNo="+commentNo,
+        		      success: function(response){
+        		    	  if(response.success){
+        		    		  showComment();
+        		    	  }
+        		        }
+        		      })
+        	}
+
+		</script>
+
+    </th:block>
+
+</th:block>

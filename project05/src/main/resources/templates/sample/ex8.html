@@ -1,0 +1,18 @@
+<!-- 블록태그 사용하기 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <h1>블록태그</h1>
+    <th:block th:each="dto: ${list}"> <!-- 블록태그로 타임리프 사용하기 -->
+        <p>[[${dto}]]</p> <!-- 블록태그를 사용하면 여러가지 하위태그를 넣을 수 있음 -->
+        <span>[[${dto}]]</span>
+    </th:block>
+
+</body>
+</html>

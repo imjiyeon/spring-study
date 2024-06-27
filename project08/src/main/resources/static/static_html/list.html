@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+		<h1>Member List Page</h1>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>아이디</th>
+					<th>이름</th>
+					<th>등록일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>					
+					<th>
+						<a href="#">user1</a>
+					</th>
+					<td>둘리</td>
+					<td>2023/03/01</td>
+				</tr>
+				<tr>					
+					<th>
+						<a href="#">user2</a>
+					</th>
+					<td>또치</td>
+					<td>2023/03/01</td>
+				</tr>
+				<tr>					
+					<th>
+						<a href="#">admin1</a>
+					</th>
+					<td>도우너</td>
+					<td>2023/03/01</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<!-- 페이지 번호 목록 -->
+		<ul class="pagination h-100 justify-content-center align-items-center">
+			<li th:class=" 'page-item ' + ${(list.number + 1) == page?'active':''} " th:each="page: ${#numbers.sequence(1, list.totalPages)}">
+				<a class="page-link" th:href="@{/member/list(page = ${page})}">
+					[[${page}]]
+				</a>
+			</li>
+		</ul>

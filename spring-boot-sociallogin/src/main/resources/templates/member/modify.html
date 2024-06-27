@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+        <h1 class="mt-4">Member Modify Page</h1>
+
+        <form>
+        
+        <div class="form-group">
+            <label >아이디</label>
+            <input type="text" class="form-control" name="id" th:value="${dto.id}" readonly >
+        </div>
+
+        <div class="form-group">
+            <label >패스워드</label>
+            <input type="password" class="form-control" name="password" th:value="${dto.password}" >
+        </div>
+        <div class="form-group">
+            <label >이름</label>
+            <input type="text" class="form-control" name="name" th:value="${dto.name}" >
+        </div>
+        <div class="form-group">
+            <label >등급</label>
+            <input type="text" class="form-control" name="role" th:value="${dto.role}">
+        </div>
+        <div class="form-group">
+            <label >소셜 회원 여부</label>
+            <input type="text" class="form-control" name="fromSocial" th:value="${dto.fromSocial}" readonly>
+        </div>
+        <div class="form-group">
+            <label >등록일</label>
+            <input type="text" class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
+        </div>
+        <div class="form-group">
+            <label >수정일</label>
+            <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
+        </div>
+
+        </form>
+
+        <button type="button" class="btn btn-primary modifyBtn">수정</button>
+
+        <button type="button" class="btn btn-info listBtn">목록으로</button>
+
+        <script th:inline="javascript">
+
+        	var form = $("form");
+
+            $(".modifyBtn").click(function() {
+                if(!confirm("수정하시겠습니까?")){
+                    return ;
+                }
+
+                form
+                    .attr("action", "/member/modify")
+                    .attr("method","post")
+                    .submit();
+            });
+
+            $(".listBtn").click(function() {
+                form
+                    .attr("action", "/member/list")
+                    .attr("method","get")
+              		.submit();
+            })
+
+        </script>
+
+
+    </th:block>
+
+</th:block>

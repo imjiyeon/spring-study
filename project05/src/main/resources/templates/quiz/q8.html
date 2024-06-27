@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+    th, td {
+      width: 120px;
+      text-align: center;
+    }
+    table {
+     border-collapse: collapse;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 원본 데이터 확인 -->
+[[${list}]]
+
+<table>
+  <tr>
+    <th>성</th>
+    <th>이름</th>
+    <th>나이</th>
+    <th>주소</th>
+    <th>인천 거주 여부</th>
+  </tr>
+
+<th:block th:each="dto : ${list}">
+  <tr>
+    <!-- 실제이름: [[${dto.name}]] -->
+    <td>[[${#strings.substring(dto.name, 0, 1)}]]</td>
+    <td>[[${#strings.substring(dto.name, 1, 3)}]]</td>
+    <td>[[${dto.age}]]</td>
+    <td>[[${dto.address}]]</td>
+    <!-- 주소 안에 인천이 포함되는지? [[${#strings.contains(dto.address, '인천')}]] -->
+    <!-- 삼항연산자로 변경할 것. true면 거주 false면 비거주 -->
+    <td>[[${#strings.contains(dto.address, '인천')==true}?거주:비거주]]</td>
+  </tr> 
+</th:block>
+  
+</table>
+
+</body>
+</html>

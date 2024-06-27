@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+    <th:block th:fragment="content">
+
+        username :
+        <div sec:authentication="name"></div>
+        user role:
+        <div sec:authentication="principal.authorities"></div>
+
+    </th:block>
+</th:block>
