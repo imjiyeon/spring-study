@@ -1,6 +1,9 @@
 package com.example.demo.security.filter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +15,9 @@ import com.example.demo.dto.MemberDTO;
 import com.example.demo.security.dto.CustomUser;
 import com.example.demo.security.util.JWTUtil;
 import com.example.demo.service.MemberService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -67,23 +73,32 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
         String token = null;
         try {
+        	//토큰 발급
             token = jwtUtil.generateToken(id);
             log.info(token);
-            
-//            Auth auth = Auth.builder().token(token.getBytes()).member(null).build();
-            
-            MemberDTO member = memberService.read(id); 
-            byte[] arr = jwtUtil.convertObjectToByteArray(member);
 
-//            response.setCharacterEncoding("UTF-8");
-//            response.setContentType("text/plain");
+            //사용자 정보 꺼내기
+            MemberDTO member = memberService.read(id); 
+
+            //결과 데이터 만들기
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("token", token.getBytes("UTF-8"));
+            data.put("user", member);
+      
             response.setContentType("application/json");
-//            response.getOutputStream().write(token.getBytes("UTF-8"));
-            response.getOutputStream().write(arr);
-            
+            response.setCharacterEncoding("UTF-8");
+
+            // 객체 -> json문자열 변환
+            ObjectMapper objectMapper = new ObjectMapper()
+                    .registerModule(new JavaTimeModule())
+                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                    .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+
+            PrintWriter out = response.getWriter();
+            out.print(objectMapper.writeValueAsString(data));
+
          // JWT 토큰 생성 및 응답 헤더에 추가
             response.setHeader("Authorization", "Bearer " + token);
-
 
         } catch (Exception e) {
             e.printStackTrace();

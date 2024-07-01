@@ -18,18 +18,16 @@ import lombok.ToString;
 @Builder
 public class MemberDTO implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	String id; // 아이디
 
-	String id;
+	String password; // 패스워드
 
-	String password;
+	String name; // 이름
 
-	String name;
+	LocalDateTime regDate; // 등록일
 
-	LocalDateTime regDate;
+	LocalDateTime modDate; // 수정일
 
-	LocalDateTime modDate;
-	
-	String role;
+	String role; // 등급
 
 }

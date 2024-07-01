@@ -1,9 +1,5 @@
 package com.example.demo.security.util;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashSet;
@@ -78,17 +74,6 @@ public class JWTUtil {
 			contentValue = null;
 		}
 		return contentValue;
-	}
-
-	// 클래스 -> byte 배열
-	public byte[] convertObjectToByteArray(Serializable obj) throws IOException {
-
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
-		try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
-			oos.writeObject(obj);
-			return bos.toByteArray();
-		}
 	}
 
 }
