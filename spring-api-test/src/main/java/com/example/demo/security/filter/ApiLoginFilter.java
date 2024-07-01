@@ -8,8 +8,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
+import com.example.demo.dto.MemberDTO;
 import com.example.demo.security.dto.CustomUser;
 import com.example.demo.security.util.JWTUtil;
+import com.example.demo.service.MemberService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,11 +27,14 @@ import lombok.extern.log4j.Log4j2;
 public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     private JWTUtil jwtUtil;
+    
+    private MemberService memberService;
 
-    public ApiLoginFilter(String defaultFilterProcessesUrl, JWTUtil jwtUtil) {
+    public ApiLoginFilter(String defaultFilterProcessesUrl, JWTUtil jwtUtil, MemberService memberService) {
 
         super(defaultFilterProcessesUrl);
         this.jwtUtil = jwtUtil;
+        this.memberService = memberService;
     }
 
     // 로그인 요청이 들어오면 아이디와 패스워드를 확인해서 인증하기
@@ -58,17 +63,23 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
         log.info(authResult.getPrincipal());
 
-        //email address
-        String email = ((CustomUser)authResult.getPrincipal()).getUsername();
+        String id = ((CustomUser)authResult.getPrincipal()).getUsername();
 
         String token = null;
         try {
-            token = jwtUtil.generateToken(email);
-
-            response.setContentType("text/plain");
-            response.getOutputStream().write(token.getBytes());
-
+            token = jwtUtil.generateToken(id);
             log.info(token);
+            
+//            Auth auth = Auth.builder().token(token.getBytes()).member(null).build();
+            
+            MemberDTO member = memberService.read(id); 
+            byte[] arr = jwtUtil.convertObjectToByteArray(member);
+
+//            response.setCharacterEncoding("UTF-8");
+//            response.setContentType("text/plain");
+            response.setContentType("application/json");
+//            response.getOutputStream().write(token.getBytes("UTF-8"));
+            response.getOutputStream().write(arr);
             
          // JWT 토큰 생성 및 응답 헤더에 추가
             response.setHeader("Authorization", "Bearer " + token);

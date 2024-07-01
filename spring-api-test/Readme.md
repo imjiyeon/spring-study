@@ -14,3 +14,12 @@ localhost:8080/board/
 
 토큰이 유효하면 요청에 성공, 아니면 실패
 ```
+
+```
+"로그인시 토큰과 함께 사용자 정보 전달하기"
+1. 사용자 관리 서비스 빈 등록
+MemberServiceImpl에서 어노테이션 제거
+SecurityConfig에서 빈 등록하기
+why? 빈이 등록되는 순서를 변경하는 것.
+    클래스 생성 순서: SecurityConfig > ApiLoginFilter > MemberService
+```

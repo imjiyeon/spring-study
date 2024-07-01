@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
@@ -15,18 +16,20 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MemberDTO {
+public class MemberDTO implements Serializable {
 
-    String id; //아이디
+	private static final long serialVersionUID = 1L;
 
-    String password; //패스워드
+	String id;
 
-    String name; //이름
+	String password;
 
-    LocalDateTime regDate; //등록일
+	String name;
 
-    LocalDateTime modDate; //수정일
-    
-    String role; //등급
+	LocalDateTime regDate;
+
+	LocalDateTime modDate;
+	
+	String role;
 
 }

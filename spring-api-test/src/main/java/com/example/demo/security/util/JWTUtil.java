@@ -1,5 +1,9 @@
 package com.example.demo.security.util;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashSet;
@@ -16,67 +20,75 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class JWTUtil {
 
-    private String secretKey = "zerock12345678";
-    
-    //토큰 유효기간: 1month
-    private long expire = 60 * 24* 30;
-    
-    //로그아웃된 토큰 리스트
-    private Set<String> blacklist = new HashSet<>();
+	private String secretKey = "zerock12345678";
 
-    //로그아웃시 블랙 리스트에 추가
-    public void invalidateToken(String token) {
-        blacklist.add(token);
-    }
+	// 토큰 유효기간: 1month
+	private long expire = 60 * 24 * 30;
 
-    // 블랙 리스트에 포함되어 있는지 확인
-    public boolean isTokenInvalid(String token) {
-        return blacklist.contains(token);
-    }
+	// 로그아웃된 토큰 리스트
+	private Set<String> blacklist = new HashSet<>();
 
-    // 토큰을 생성하는 메소드
-    public String generateToken(String content) throws Exception{
+	// 로그아웃시 블랙 리스트에 추가
+	public void invalidateToken(String token) {
+		blacklist.add(token);
+	}
 
-        return Jwts.builder()
-                .setIssuedAt(new Date())
-                .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(expire).toInstant()))
-                .claim("sub", content)
-                .signWith(SignatureAlgorithm.HS256, secretKey.getBytes("UTF-8"))
-                .compact();
-    }
+	// 블랙 리스트에 포함되어 있는지 확인
+	public boolean isTokenInvalid(String token) {
+		return blacklist.contains(token);
+	}
 
-    // 토큰에서 아이디를 추출하는 메소드
-    public String validateAndExtract(String tokenStr)throws Exception {
+	// 토큰을 생성하는 메소드
+	public String generateToken(String content) throws Exception {
 
-        String contentValue = null;
-        
-        for(String token : blacklist) {
-        	if(token.equals(tokenStr)) {
-        		log.info("해당 토큰을 사용할 수 없습니다..");
-        		return "";
-        	}
-        }
+		return Jwts.builder().setIssuedAt(new Date())
+				.setExpiration(Date.from(ZonedDateTime.now().plusMinutes(expire).toInstant())).claim("sub", content)
+				.signWith(SignatureAlgorithm.HS256, secretKey.getBytes("UTF-8")).compact();
+	}
 
-        try {
-            DefaultJws defaultJws = (DefaultJws) Jwts.parser()
-                    .setSigningKey(secretKey.getBytes("UTF-8")).parseClaimsJws(tokenStr);
+	// 토큰에서 아이디를 추출하는 메소드
+	public String validateAndExtract(String tokenStr) throws Exception {
 
-            log.info(defaultJws);
+		String contentValue = null;
 
-            log.info(defaultJws.getBody().getClass());
+		for (String token : blacklist) {
+			if (token.equals(tokenStr)) {
+				log.info("해당 토큰을 사용할 수 없습니다..");
+				return "";
+			}
+		}
 
-            DefaultClaims claims = (DefaultClaims) defaultJws.getBody();
+		try {
+			DefaultJws defaultJws = (DefaultJws) Jwts.parser().setSigningKey(secretKey.getBytes("UTF-8"))
+					.parseClaimsJws(tokenStr);
 
-            log.info("------------------------");
+			log.info(defaultJws);
 
-            contentValue = claims.getSubject();
+			log.info(defaultJws.getBody().getClass());
 
-        }catch(Exception e){
-            e.printStackTrace();
-            log.error(e.getMessage());
-            contentValue = null;
-        }
-        return contentValue;
-    }
+			DefaultClaims claims = (DefaultClaims) defaultJws.getBody();
+
+			log.info("------------------------");
+
+			contentValue = claims.getSubject();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage());
+			contentValue = null;
+		}
+		return contentValue;
+	}
+
+	// 클래스 -> byte 배열
+	public byte[] convertObjectToByteArray(Serializable obj) throws IOException {
+
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+		try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
+			oos.writeObject(obj);
+			return bos.toByteArray();
+		}
+	}
 
 }
