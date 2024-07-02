@@ -87,6 +87,9 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 			// 지금은 json문자열로 변환하기 때문에, 토큰을 그대로 담아야함
 			data.put("token", token);
 			data.put("user", member);
+			
+//			log.info(token);
+//			log.info(Arrays.toString(token.getBytes()));
 
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
