@@ -32,29 +32,29 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
-    private JWTUtil jwtUtil;
-    
-    private MemberService memberService;
+	private JWTUtil jwtUtil;
 
-    public ApiLoginFilter(String defaultFilterProcessesUrl, JWTUtil jwtUtil, MemberService memberService) {
+	private MemberService memberService;
 
-        super(defaultFilterProcessesUrl);
-        this.jwtUtil = jwtUtil;
-        this.memberService = memberService;
-    }
+	public ApiLoginFilter(String defaultFilterProcessesUrl, JWTUtil jwtUtil, MemberService memberService) {
 
-    // 로그인 요청이 들어오면 아이디와 패스워드를 확인해서 인증하기
+		super(defaultFilterProcessesUrl);
+		this.jwtUtil = jwtUtil;
+		this.memberService = memberService;
+	}
+
+	// 로그인 요청이 들어오면 아이디와 패스워드를 확인해서 인증하기
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
 
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
-		
-		if(id == null) {
+
+		if (id == null) {
 			throw new BadCredentialsException("id cannot be null");
 		}
-		
+
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(id, pw);
 
 		return getAuthenticationManager().authenticate(authToken);
@@ -62,49 +62,46 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 	// 인증에 성공했으면 jwt토큰을 발급하고 응답하기
 	@Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+			Authentication authResult) throws IOException, ServletException {
 
-        log.info("-----------------ApiLoginFilter---------------------");
-        log.info("successfulAuthentication: " + authResult);
+		log.info("-----------------ApiLoginFilter---------------------");
+		log.info("successfulAuthentication: " + authResult);
 
-        log.info(authResult.getPrincipal());
+		log.info(authResult.getPrincipal());
 
-        String id = ((CustomUser)authResult.getPrincipal()).getUsername();
+		String id = ((CustomUser) authResult.getPrincipal()).getUsername();
 
-        String token = null;
-        try {
-        	//토큰 발급
-            token = jwtUtil.generateToken(id);
-            log.info(token);
+		String token = null;
+		try {
+			// 토큰 발급
+			token = jwtUtil.generateToken(id);
+			log.info(token);
 
-            //사용자 정보 꺼내기
-            MemberDTO member = memberService.read(id); 
+			// 사용자 정보 꺼내기
+			MemberDTO member = memberService.read(id);
 
-            //결과 데이터 만들기
-            HashMap<String, Object> data = new HashMap<>();
-            data.put("token", token.getBytes("UTF-8"));
-            data.put("user", member);
-      
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
+			// 결과 데이터 만들기
+			HashMap<String, Object> data = new HashMap<>();
+			// 에러났던 부분.. 이전에는 토큰을 바이너리(바이트배열)로 반환했음
+			// 지금은 json문자열로 변환하기 때문에, 토큰을 그대로 담아야함
+			data.put("token", token);
+			data.put("user", member);
 
-            // 객체 -> json문자열 변환
-            ObjectMapper objectMapper = new ObjectMapper()
-                    .registerModule(new JavaTimeModule())
-                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-                    .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
 
-            PrintWriter out = response.getWriter();
-            out.print(objectMapper.writeValueAsString(data));
+			// 객체 -> json문자열 변환
+			ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule())
+					.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+					.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			PrintWriter out = response.getWriter();
+			out.print(objectMapper.writeValueAsString(data));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }
-
-
-
-
-
