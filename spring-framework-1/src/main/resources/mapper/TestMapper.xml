@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.example.demo.mapper.TestMapper">
+
+  <select id="getTime2" resultType="String">
+	SELECT SYSDATE FROM DUAL
+  </select>
+
+  <select id="paramTest1" resultType="String">
+	SELECT EMP_NAME FROM EMP WHERE EMP_NO = #{empNo}
+  </select>
+ 
+  <select id="paramTest2"  resultType="String">
+	SELECT EMP_NAME FROM EMP WHERE EMP_NO = #{empNo} AND EMP_NAME = #{empName}
+  </select>
+ 
+  <select id="paramTest3" resultType="String">
+	SELECT ${columnNm} FROM EMP WHERE EMP_NO = 1001
+  </select>
+  
+  <select id="returnTest1" resultType="Map">
+	SELECT * FROM EMP WHERE EMP_NO = #{empNo}
+  </select>
+  
+  <select id="returnTest2" resultType="Map"> <!-- 객체 한개던 리스트던 모두 MAP으로 표시한다 -->
+	SELECT * FROM EMP
+  </select>
+  
+  <select id="ifTest" resultType="Map">
+	SELECT * FROM EMP WHERE 1=1
+	<if test="empNo!=0">
+		 AND EMP_NO = #{empNo}
+	</if>
+  </select>
+  
+  <select id="chooseTest" resultType="Map">
+	SELECT * FROM EMP WHERE 1=1
+	<choose>
+		<when test="empNo!=0">
+			AND EMP_NO = #{empNo}
+		</when>
+		<when test="empName!=null">
+			AND EMP_NAME = #{empName}
+		</when>
+		<otherwise>
+			ORDER BY EMP_NO DESC
+		</otherwise>
+	</choose>
+  </select>
+ 
+</mapper>

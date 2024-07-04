@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- log4jdbc 옵션 설정 -->
+    <logger name="jdbc" level="OFF"/>
+    <!-- connection open close 로깅 여부 -->
+    <logger name="jdbc.connection" level="OFF"/>
+    <!-- SQL문만 로깅할지 여부 -->
+    <logger name="jdbc.sqlonly" level="OFF"/>
+	
+    <!-- 쿼리문 수행에 걸린 시간 로깅 -->
+    <logger name="jdbc.sqltiming" level="DEBUG"/>
+    
+    <!-- ResultSet외 모든 JDBC 호출 정보를 로깅할지 여부   -->
+    <logger name="jdbc.audit" level="OFF"/>
+    
+    <!-- ResultSet 포함 모든 JDBC 호출 정보를 로깅 -->
+    <logger name="jdbc.resultset" level="OFF"/>
+    <logger name="jdbc.resultsettable" level="INFO"/>
+    
+    <!-- 스프링의 기본로그 스타일 적용 -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    
+    <!-- 콘솔 출력 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    
+    <!-- SQL 결과 조회된 데이터의 table을 로그로 남긴다. -->
+	<logger name="jdbc.resultsettable" level="ON" additivity="false">
+		<appender-ref ref="CONSOLE"/>
+	</logger>
+	
+    <root level="INFO"> <!-- DEBUG -->
+        <appender-ref ref="CONSOLE"/> <!-- 콘솔 출력 -->
+    </root>
+</configuration>
