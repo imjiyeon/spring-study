@@ -1,5 +1,6 @@
 package com.example.demo.security.filter;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -48,8 +49,13 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
 
-		String id = request.getParameter("id");
-		String pw = request.getParameter("pw");
+		//바디에서 사용자 정보 꺼내기
+		String body = getBody(request);
+		ObjectMapper objectMapper = new ObjectMapper();
+		HashMap<String, String> map = objectMapper.readValue(body, HashMap.class);
+		
+		String id = map.get("id");
+		String pw = map.get("pw");
 
 		if (id == null) {
 			throw new BadCredentialsException("id cannot be null");
@@ -87,9 +93,6 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 			// 지금은 json문자열로 변환하기 때문에, 토큰을 그대로 담아야함
 			data.put("token", token);
 			data.put("user", member);
-			
-//			log.info(token);
-//			log.info(Arrays.toString(token.getBytes()));
 
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
@@ -105,6 +108,33 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	// 요청 메세지에서 바디 데이터를 꺼내는 메소드
+	public String getBody(HttpServletRequest request) throws IOException {
+		StringBuilder stringBuilder = new StringBuilder();
+		BufferedReader bufferedReader = null;
+
+		try {
+			bufferedReader = request.getReader();
+			char[] charBuffer = new char[128];
+			int bytesRead;
+			while ((bytesRead = bufferedReader.read(charBuffer)) != -1) {
+				stringBuilder.append(charBuffer, 0, bytesRead);
+			}
+		} catch (IOException ex) {
+			throw ex;
+		} finally {
+			if (bufferedReader != null) {
+				try {
+					bufferedReader.close();
+				} catch (IOException ex) {
+					throw ex;
+				}
+			}
+		}
+
+		return stringBuilder.toString();
 	}
 
 }
