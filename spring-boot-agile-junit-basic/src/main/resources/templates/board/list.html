@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+
+	<th:block th:fragment="content">
+
+		<!-- 버튼을 클릭하면 등록화면으로 이동 -->
+		<h1>Board List Page
+		 	<span>
+                <a th:href="@{/board/register}">
+                    <button type="button" class="btn btn-outline-primary">게시물 등록</button>
+                </a>
+            </span>
+		</h1>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>등록일</th>
+				</tr>
+			</thead>
+
+			<!-- 테이블에 타임리프 처리 -->
+			<tbody>
+				<tr th:each="dto : ${list}"> <!-- 게시물 리스트를 하나씩 꺼내서 처리하기 -->
+					<!-- 링크를 클릭하면 상세화면으로 이동 -->
+					<th>
+						<!-- (키=값) 부분은 (/board/read?no=1) 으로 처리됨 -->
+						<a th:href="@{/board/read(no = ${dto.no})}">[[${dto.no}]]</a> 
+					</th>
+					<td>[[${dto.title}]]</td>
+					<td>[[${dto.writer}]]</td>
+					<!-- 날짜는 년/월/일 포맷으로 처리 -->
+					<td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td> 
+				</tr>
+
+			</tbody>
+		</table>
+
+		<!--인라인 속성을 사용하여 타임리프 적용 (데이터 자료형이 자동으로 처리됨)-->
+		<!--등록이 끝나고 난 후에 목록화면에서 등록처리결과 보여주기-->
+		<!--새로 생성된 글의 번호를 변수에 저장하고 모달창으로 출력-->
+<!--		<script th:inline="javascript">
+                    $(document).ready(function(){
+                      var msg = [[${msg}]];
+                      if(msg != null){
+                          alert(msg + "번 글이 등록되었습니다.");
+                      }
+                    });
+        </script>-->
+
+	</th:block>
+
+</th:block>
