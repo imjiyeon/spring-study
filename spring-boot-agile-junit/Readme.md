@@ -3,6 +3,6 @@
 
 ```
 애자일 수업 자료
-- 템플릿 사용
+- 템플릿 사용 (spring-boot-agile-junit-basic)
 ```
 
