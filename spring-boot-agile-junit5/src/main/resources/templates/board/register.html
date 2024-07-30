@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 
-<th:block th:replace="~{layout/basic :: setContent(~{this::content} )}">
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
 
     <th:block th:fragment="content">
 
         <h1 class="mt-4">Board Register Page</h1>
 
         <!-- 데이터를 전송할 주소와 방식 지정 -->
-        <form th:action="@{/board/register}" th:method="post" enctype="multipart/form-data">
+        <form th:action="@{/board/register}" th:method="post">
 
             <!-- DTO에 데이터가 수집되므로 각 입력필드에 알맞은 name 지정 -->
 
@@ -22,12 +22,6 @@
             <div class="form-group">
                 <label >작성자</label>
                 <input type="text" class="form-control" name="writer">
-            </div>
-
-            <!-- 첨부파일 입력필드 추가 -->
-            <div class="form-group">
-                <label>첨부파일</label>
-                <input type="file" class="form-control" name="uploadFile"/>
             </div>
 
             <button type="submit" class="btn btn-primary">등록</button>
