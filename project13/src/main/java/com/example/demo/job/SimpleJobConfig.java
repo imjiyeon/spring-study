@@ -25,7 +25,6 @@ import com.example.demo.stats.service.StatsService;
 @Configuration
 public class SimpleJobConfig {
 
-	
 	@Autowired
 	JobRepository jobRepository;
 	
@@ -66,12 +65,18 @@ public class SimpleJobConfig {
 	public Tasklet testTasklet() {
 		return ((contribution, chunkContext) -> {
 			
+			System.out.println(">>>>> This is Step1");
+			
 			// 주문 이력 가져오기
 			List<OrderDTO> list = orderService.getList();
 			
 			List<OrderDTO> filterList = list.stream()
 						.filter(dto -> dto.getRegDate().toLocalDate().equals(LocalDate.now()))
 						.collect(Collectors.toList());
+			
+			for(OrderDTO dto: filterList) {
+				System.out.println(dto);
+			}
 			
 			// 전체 건수와 총금액 구하기
 			long count = filterList.stream().count();
@@ -82,7 +87,6 @@ public class SimpleJobConfig {
 		    context.getStepExecution().getJobExecution().getExecutionContext().put("count", count);
 		    context.getStepExecution().getJobExecution().getExecutionContext().put("totalPrice", totalPrice);
 
-			System.out.println(">>>>> This is Step1");
 			return RepeatStatus.FINISHED;
 		});
 	}
@@ -101,6 +105,9 @@ public class SimpleJobConfig {
 			// 집계 구하기
 			int cnt = Integer.parseInt(count.toString());
 			int total = Integer.parseInt(totalPrice.toString());
+			
+			System.out.println("총 건수:" + cnt);
+			System.out.println("총 금액:" + total);
 			
 			// 집계 추가하기
 			StatsDTO dto = StatsDTO.builder().orderDt(LocalDate.now()).count(cnt).totalPrice(total).build();
