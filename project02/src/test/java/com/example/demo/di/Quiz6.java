@@ -1,5 +1,7 @@
 package com.example.demo.di;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 // 1.다음과 같이 선생님(Teacher) 인터페이스를 설계하세요
@@ -14,5 +16,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class Quiz6 {
+	
+	@Autowired
+	Teacher teacher;
+	
+	@Test
+	void 테스트() {
+		teacher.teach();
+	}
 
 }
