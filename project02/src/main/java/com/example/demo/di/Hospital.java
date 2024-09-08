@@ -4,13 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Class {
-
+public class Hospital {
+	
 	@Autowired
-	Teacher teacher;
-
-	public Teacher getTeacher() {
-		return teacher;
-	}
+	Doctor doctor;
 
 }

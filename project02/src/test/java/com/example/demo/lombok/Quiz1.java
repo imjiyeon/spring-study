@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
-//  1) 다음과 같이 도서(Book)클래스을 만드세요
+//  1) 다음과 같이 도서(Book)클래스을 설계하세요
 //  속성: 제목, 가격, 출판사, 페이지수
-//  기능: 모든멤버변수의 getter/setter, 디폴트생성자, 모든멤버변수를 초기화하는 생성자, 도서정보를 반환하는 기능
-//  2) 도서의 인스턴스를 3개 생성하세요 (디폴트생성자, 전체생성자, 빌더를 각각사용해서)
-//  3) 도서의 모든 정보를 출력하세요
+//  기능: 모든 멤버변수의 getter/setter, 디폴트생성자, 모든 멤버변수를 초기화하는 생성자, 도서정보를 반환하는 메소드
+//  2) 도서 인스턴스를 3개 생성하세요 (디폴트생성자, 전체생성자, 빌더를 각각 사용하여 생성)
+//  3) 모든 도서의 정보를 출력하세요
 
 @SpringBootTest //스프링 컨테이너 환경
 public class Quiz1 {

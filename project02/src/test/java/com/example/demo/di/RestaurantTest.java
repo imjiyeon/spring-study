@@ -25,3 +25,7 @@ public class RestaurantTest {
 	}
 
 }
+
+//의존성 주입이 실패하는 원인
+//1. 객체를 생성하지 않았을 때 (@Component가 없으면)
+//2. 주입을 받지 않았을 때 (@Autowired가 없으면)
