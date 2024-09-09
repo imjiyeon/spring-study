@@ -2,12 +2,10 @@ package com.example.demo.entity;
 
 import java.time.LocalDate;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,14 +28,14 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int orderNo;
 
-	@Column(length = 30, nullable = true)
+	@Column(length = 30, nullable = false)
 	String customerName;
 
 	@Column(length = 100, nullable = true)
 	String shipAddress;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Column(nullable = true)
+	@Column(nullable = false)
     LocalDate orderDate;
 
 }

@@ -27,13 +27,13 @@ public class Gift {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int no;
 
-	@Column(length = 20, nullable = true)
+	@Column(length = 20, nullable = false)
 	String name;
 
-	@Column(length = 20, nullable = true)
+	@Column(length = 20, nullable = false)
 	String type;
 
-	@Column(nullable = true)
+	@Column(nullable = false)
 	int price;
 
 }

@@ -31,9 +31,9 @@ public class Book {
 	String title;
 
 	//  nullable은 기본값이 true여서 생략 가능
-	@Column(length = 100, nullable = true)
+	@Column(length = 100, nullable = false)
 	String publisher;
 
-	@Column(nullable = true)
+	@Column(nullable = false)
 	int price;
 }
