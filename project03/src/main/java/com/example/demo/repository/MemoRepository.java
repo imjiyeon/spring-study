@@ -11,7 +11,5 @@ public interface MemoRepository extends JpaRepository<Memo, Integer> {
 
 }
 
-/* 
- * JpaRepository를 상속받으면 crud 처리 메소드를 물려받음
- * JpaRepository를 사용할 때는 엔티티와 PK의 타입 지정해야 함
- * */
+//JpaRepository는 모든 기능을 상속받았기 때문에 CRUD 기능와 페이징 기능을 사용할 수 있다
+//JpaRepository를 사용할 때는 엔티티와 해당엔티티의 PK 타입 지정해야 한다

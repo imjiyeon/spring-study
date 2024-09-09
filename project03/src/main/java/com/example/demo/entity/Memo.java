@@ -16,20 +16,28 @@ import lombok.ToString;
  * */
 
 @Entity // 엔티티 클래스임을 명시
-@Table(name = "tbl_memo") // 테이블 이름. 생략하면 클래스 이름과 동일한 이름으로 생성됨
+@Table(name = "tbl_memo") // 테이블 이름
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Memo {
 
-	@Id // PK. 엔티티는 PK에 해당하는 필드를 지정해야함
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // PK를 자동으로 생성할 때 사용 (Auto increment 방식)
+	@Id // primary key
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // 키값을 자동으로 생성할 때 사용(Auto increment)
 	int no;
 
 	@Column(length = 200, nullable = true) // 컬럼의 제약사항 지정
 	String text; // 컬럼의 타입과 이름 지정
 }
 
-// 클래스 생성 후 프로젝트를 실행
-// 디비버 접속 후 테이블이 생성되었는지 확인
+/* 확인 */
+// 클래스 생성 후 프로젝트를 실행한다
+// 디비버에 접속하여 테이블이 생성되었는지 확인한다
+// PK 필드를 삭제한 후 발생하는 오류를 확인한다: PK가 하나도 없으면 테이블 연결 안됨
+
+/* 설정을 추가한 후 확인 */
+//생성된 sql문을 확인한다
+//테이블 이름은 @Table에서 설정한 이름으로 생성된다
+//@Table 삭제한 후 동작을 확인한다: 생략하면 클래스 이름과 동일한 이름으로 테이블이 생성됨
+

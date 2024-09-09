@@ -2,7 +2,6 @@ package com.example.demo.entity;
 
 import java.time.LocalDateTime;
 
-import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,6 +14,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class) // 엔티티에 변화를 감지하는 리스너 지정
@@ -48,3 +53,7 @@ public class Board {
 
 
 // 사용자가 입력하는지? 시스템이 입력하는지? 생각해보기!
+
+/* 확인 */
+//생성된 sql문을 확인한다
+//'boardNo' 필드는 스네이크 케이스 방식에 따라 'board_no'로 변환되어 컬럼이 생성된다
