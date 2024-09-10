@@ -2,14 +2,8 @@ package com.example.demo.di;
 
 import org.springframework.stereotype.Component;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
+//Spring이 Manager 객체를 생성하고 컨테이너에 저장함
 @Component
 public class Manager {
-	
+
 }
