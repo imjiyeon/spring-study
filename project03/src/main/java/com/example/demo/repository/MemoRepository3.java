@@ -3,14 +3,19 @@ package com.example.demo.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.example.demo.entity.Memo;
 
+import jakarta.transaction.Transactional;
+
 /*
  * @Query 사용하기
  * */
+
+@Transactional
 public interface MemoRepository3 extends JpaRepository<Memo, Integer> {
 
 	/* jpql 사용하기 */
@@ -34,6 +39,14 @@ public interface MemoRepository3 extends JpaRepository<Memo, Integer> {
 	//select * from tbl_memo order by no desc
 	@Query(value = "select * from tbl_memo order by no desc", nativeQuery = true)
 	List<Memo> get4();
+	
+	@Query(value = "delete from tbl_memo where no = :mno", nativeQuery = true)
+	void delete1(@Param("mno") int mno);
+	
+	// 객체 파라미터
+	@Modifying
+	@Query(value = "update tbl_memo set text = :#{#param.text} where no = :#{#param.no}", nativeQuery = true)
+	int update1(@Param("param") Memo memo);
 	
 }
 

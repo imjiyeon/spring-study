@@ -26,13 +26,4 @@ public interface GiftRepository extends JpaRepository<Gift, Integer> {
 	@Query(value = "select * from tbl_gift where price <= :price and type=:type", nativeQuery = true)
 	List<Gift> get3(@Param("price") int price, @Param("type") String type);
 
-	// JPQL
-	@Query("select m from Gift m where m.price >=:price")
-	List<Gift> get4(@Param("price") int price);
-
-	@Query("select m from Gift m where m.name like %:name")
-	List<Gift> get5(@Param("name") String name);
-
-	@Query("select m from Gift m where m.price <= :price and m.type=:type")
-	List<Gift> get6(@Param("price") int price, @Param("type") String type);
 }
