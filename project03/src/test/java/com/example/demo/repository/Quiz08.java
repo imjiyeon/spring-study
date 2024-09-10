@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.example.demo.entity.Member;
 
 @SpringBootTest
-public class Quiz8 {
+public class Quiz08 {
 
 	@Autowired
 	MemberRepository repository;
