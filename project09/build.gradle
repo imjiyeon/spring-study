@@ -29,8 +29,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.1.2'
 
-	// sts 4.20 이후 버전 부터 단위테스트 실행시 에러가 나는 문제가 있음
-	// 아래 라이브러리를 추가하면 해결됨
+	// 단위테스트 에러 해결
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

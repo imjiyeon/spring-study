@@ -27,6 +27,9 @@ dependencies {
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	
+	// 단위테스트 에러 해결
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	
 	// CSV 파일을 읽기 위한 라이브러리 추가
 	implementation 'com.opencsv:opencsv:5.5'
 	

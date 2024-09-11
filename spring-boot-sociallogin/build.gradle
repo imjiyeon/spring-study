@@ -28,10 +28,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.1.2'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' //시큐티리와 관련된 타임리프 라이브러리
+	//시큐티리와 관련된 타임리프 라이브러리
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	
+	// 단위테스트 에러 해결
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
