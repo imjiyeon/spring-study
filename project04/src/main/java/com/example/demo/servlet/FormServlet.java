@@ -28,7 +28,7 @@ public class FormServlet extends HttpServlet { // 상속받기
 		 
 		 PrintWriter w = response.getWriter();
 		 
-	     // 회원 등록 폼 HTML 만들기
+	     // 회원 정보를 입력할 수 있는 HTML Form 만들기
 		 // 실습코드에서 복사하기!!!
 		 w.write("<!DOCTYPE html>\n" +
 		 "<html>\n" +
