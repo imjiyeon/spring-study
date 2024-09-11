@@ -50,4 +50,15 @@ public class MemoRepositoryTest3 {
 		}
 	}
 	
+	@Test
+	public void 데이터삭제() {
+		memoRepository3.delete1(15);
+	}
+	
+	@Test
+	public void 데이터수정() {
+		Memo memo = new Memo(25,"변경했습니다");
+		memoRepository3.update1(memo);
+	}
+	
 }

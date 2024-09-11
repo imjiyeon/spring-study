@@ -22,16 +22,22 @@ public class Quiz04 {
 
 	@Test
 	public void 데이터등록() {
-		Member member1 = Member.builder().userId("user").password("1234").grade("사용자").build();
+		Member member1 = Member.builder().userId("user1").password("1234").grade("사용자").build();
 		repository.save(member1);
 		
-		Member member2 = Member.builder().userId("admin").password("1234").grade("관리자").build();
+		Member member2 = Member.builder().userId("user2").password("1234").grade("사용자").build();
 		repository.save(member2);
+		
+		Member member3 = Member.builder().userId("admin").password("1234").grade("관리자").build();
+		repository.save(member3);
+		
+		Member member4 = Member.builder().userId("yoyt22").password("1234").grade("관리자").build();
+		repository.save(member4);
 	}
 
 	@Test
 	public void 데이터단건조회() {
-		Optional<Member> result = repository.findById("user");
+		Optional<Member> result = repository.findById("user1");
 		if(result.isPresent()) {
 			Member member = result.get();
 			System.out.println(member);
@@ -48,7 +54,7 @@ public class Quiz04 {
 
 	@Test
 	public void 데이터수정() {
-		Optional<Member> result = repository.findById("user");
+		Optional<Member> result = repository.findById("user1");
 		Member member = result.get();
 		member.setPassword("5678");
 		repository.save(member);
@@ -56,6 +62,6 @@ public class Quiz04 {
 
 	@Test
 	public void 데이터삭제() {
-		repository.deleteById("user");
+		repository.deleteById("user1");
 	}
 }

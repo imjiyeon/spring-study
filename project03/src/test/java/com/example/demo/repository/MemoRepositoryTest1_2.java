@@ -43,7 +43,7 @@ public class MemoRepositoryTest1_2 {
 	void 페이징처리() {
 		// of: Pageable 객체를 생성하는 함수
 		// 페이지번호와 데이터개수를 담아서 페이지 생성
-		Pageable pageable = PageRequest.of(1, 10); // 페이지번호 바꿔보기
+		Pageable pageable = PageRequest.of(0, 10); // 페이지번호 바꿔보기
 
 		// 페이지 정보를 전달하여 데이터 조회하기
 		// 그냥 조회하면 list로 반환되고
@@ -62,6 +62,12 @@ public class MemoRepositoryTest1_2 {
 		System.out.println("다음 페이지 존재 여부:" + page.hasNext());
 		System.out.println("시작 페이지 여부:" + page.isFirst());
 	}
+	// SQL에 LIMIT이 추가됨
+	// PageRequest.of(0, 10)를 사용하면 첫 번째 페이지를 조회한다
+	// 이때 SQL의 LIMIT절은 "LIMIT 0, 10"이 된다
+	// 첫 번째 행부터 시작해서 10개의 데이터를 조회한다는 의미이다
+	// 만약 두 번째 페이지를 조회한다면 LIMIT절은 "LIMIT 10, 10"이 된다
+	// 11 번째 행부터 시작해서 10개의 데이터를 조횐한다는 의미이다
 
 	@Test
 	void 정렬조건추가하기() {
@@ -82,4 +88,5 @@ public class MemoRepositoryTest1_2 {
 			System.out.println(memo);
 		}
 	}
+	// SQL에 ORDERBY가 추가됨
 }

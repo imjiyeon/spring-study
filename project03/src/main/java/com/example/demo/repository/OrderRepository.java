@@ -21,12 +21,5 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	// select * from tbl_order where order_date = '2023-07-03';
 	@Query(value = "select * from tbl_order where order_date = :orderDate", nativeQuery = true)
 	List<Order> get2(@Param("orderDate") LocalDate orderDate);
-
-	// JPQL
-	@Query("select m from Order m where m.shipAddress like :address%")
-	List<Order> get3(@Param("address") String address);
-
-	@Query("select m from Order m where m.orderDate = :orderDate")
-	List<Order> get4(@Param("orderDate") LocalDate orderDate);
 	
 }
