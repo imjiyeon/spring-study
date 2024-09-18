@@ -3,9 +3,9 @@ package com.example.demo.domain;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+// 이 어노테이션 필요 없음
+//@SpringBootTest
 public class MemberRepositoryTest {
 
 	// 스프링을 사용하지 않았기 때문에 직접 리파지토리 객체 생성해야함
