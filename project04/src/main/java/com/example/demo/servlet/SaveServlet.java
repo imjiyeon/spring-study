@@ -12,35 +12,37 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-// 회원 정보를 등록할 서블릿 만들기
+// 회원 등록 폼에서 입력된 정보를 받아 새로운 회원을 저장하는 서블릿 만들기
 
+// HttpServlet 클래스를 상속받고, 서블릿 이름과 URL 설정
 @WebServlet(name = "SaveServlet", urlPatterns = "/servlet/save")
 public class SaveServlet extends HttpServlet {
 
+	// 회원정보를 관리할 리파지토리 생성 
 	MemberRepository repository = new MemberRepository();
 
-	// 사용자 요청을 처리하는 메소드 재정의
+	// service 메소드를 재정의하여 사용자 요청을 처리
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-        // 요청 메세지에서 사용자가 전달한 파라미터 꺼내기
+        // 요청 메세지에서 사용자가 전달한 파라미터를 조회
+		// 회원 이름과 패스워드를 꺼내서 Member 객체를 생성
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
-        // 회원 추가
         Member member = new Member(0, username, password);
+        
+        // 생성된 회원 객체를 저장소에 등록
         repository.save(member);
-        request.setAttribute("member", member);
 
-        // 응답 메세지 만들기 (반환할 뷰)
+		// 응답 메세지 설정 (컨텐츠 타입과 문자 인코딩)
         response.setContentType("text/html");
         response.setCharacterEncoding("utf-8");
         
         PrintWriter w = response.getWriter();
         
-	    // 등록 결과 HTML 만들기
-        // 실습코드에서 복사하기!!!
+        // 등록 결과를 확인하기 위한 html을 만들어서 응답에 추가
+        // 자바코드로 html을 작성해야 해서 힘들다.. 이부분도 실습코드에서 복사할 것!
         w.write("<html>\n" +
         "<head>\n" +
         " <meta charset=\"UTF-8\">\n" +
