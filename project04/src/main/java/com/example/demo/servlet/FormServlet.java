@@ -16,35 +16,36 @@ import jakarta.servlet.http.HttpServletResponse;
 public class FormServlet extends HttpServlet { 
 
 	// HttpServlet에게 물려받은 service 메소드 재정의하기
-	// 사용자 요청을 처리하는 메소드로, 사용자 요청이 오면 요청 및 응답 객체가 자동으로 생성됨
+	// 사용자 요청을 처리하는 메소드로, 사용자 요청이 오면 request와 response 객체가 자동으로 생성됨
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 응답 메세지 만들기
-		// 컨텐츠 타입과 인코딩 설정
+		
+		// 응답 메세지 설정 (컨텐츠 타입과 문자 인코딩)
 		response.setContentType("text/html");
 		response.setCharacterEncoding("utf-8");
 		
 		// 응답 데이터를 작성하기 위해 wrtier 객체 생성
 		PrintWriter w = response.getWriter();
 		 
-		// 회원 정보를 입력하기 위해 html form 태그를 작성하여 응답데이터에 추가
-		// 이부분은 실습코드에서 복사할 것!
+		// 회원 정보를 입력할 수 있는 html form 태그를 만들어서 응답에 추가
+		// 자바코드로 html을 작성해야 해서 힘들다.. 이부분은 실습코드에서 복사할 것!
 		w.write("<!DOCTYPE html>\n" +
 		"<html>\n" +
 		"<head>\n" +
 		" <meta charset=\"UTF-8\">\n" +
-		" <title>Title</title>\n" +
+		" <title>회원 등록</title>\n" +
 		"</head>\n" +
 		"<body>\n" +
-		"<form action=\"/servlet/save\" method=\"post\">\n" +
-		" 이름: <input type=\"text\" name=\"username\" />\n" +
-		" 암호: <input type=\"text\" name=\"password\" />\n" +
-		" <button type=\"submit\">전송</button>\n" +
+		"<form action=\"/servlet/save\" method=\"post\">\n" + // 폼을 전송할 주소
+		" 이름: <input type=\"text\" name=\"username\" />\n" + // 이름 입력 필드
+		" 암호: <input type=\"text\" name=\"password\" />\n" + // 패스워드 입력 필드
+		" <button type=\"submit\">전송</button>\n" + // 전송 버튼
 		"</form>\n" +
 		"</body>\n" +
 		"</html>\n");
-
 	}
+	
+	// 이제 브라우저에서 'localhost:8080/servlet/form'을 호출하면 회원 등록 폼이 나타난다
 
 }
