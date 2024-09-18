@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// 스프링 MVC 없이 회원 관리 기능을 구현한 가상 리파지토리
-// 테이블 대신 Map을 사용하여 회원 정보를 관리
+// 스프링 MVC 없이 순수한 자바클래스로 회원 관리 기능을 구현한 가상 리파지토리
+// 테이블 대신 Map을 사용하여 회원 정보를 저장하고 관리
 public class MemberRepository {
 
 	// 회원 정보를 저장할 Map (키:회원번호, 값:회원객체)
