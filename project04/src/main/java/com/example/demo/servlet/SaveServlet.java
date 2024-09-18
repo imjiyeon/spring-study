@@ -56,7 +56,8 @@ public class SaveServlet extends HttpServlet {
         "</ul>\n" +
         "</body>\n" +
         "</html>");
-
 	}
+	
+	// 회원 등록 폼에 회원 정보를 입력하고 "전송" 버튼을 클릭하면, 데이터가 전송되고 저장 결과를 확인할 수 있다.
 
 }
