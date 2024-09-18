@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//스프링 없이 순수하게 서블릿만 사용하기 위해 가상의 리파지토리 구현
+// 스프링 MVC 없이 회원 관리 기능을 구현한 가상 리파지토리
+// 테이블 대신 Map을 사용하여 회원 정보를 관리
 public class MemberRepository {
 
-	// 회원 정보를 저장할 가상 저장소 (테이블 대신)
+	// 회원 정보를 저장할 Map (키:회원번호, 값:회원객체)
     static Map<Integer, Member> store = new HashMap<>();
     
     // 회원 번호를 자동으로 생성하기 위한 시퀀스
@@ -16,19 +17,20 @@ public class MemberRepository {
 
     // 새로운 회원을 저장소에 추가
     public Member save(Member member) {
-        member.setNo(++sequence); //회원 번호를 증가시켜서 설정
+    	// 회원이 추가될 때마다 시퀀스를 1씩 증가하여 사용함
+        member.setNo(++sequence);
         store.put(member.getNo(), member);
         return member;
     }
     
-    // 회원번호로 저장소에서 회원을 조회
+    // 회원번호로 특정 회원 정보를 조회
     public Member findById(int id) {
         return store.get(id);
     }
 
     // 저장소에 있는 모든 회원을 조회
-    public List<Member> findAll() {
-    	// map에 저장된 값들을 collection으로 가져온 후, List로 변환하여 반환
+    // Map의 값을 List로 변환하여 반환 
+    public List<Member> findAll() {	
         return new ArrayList<>(store.values());
     }
 
