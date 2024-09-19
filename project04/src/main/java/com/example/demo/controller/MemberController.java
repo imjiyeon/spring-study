@@ -10,37 +10,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.domain.Member;
 import com.example.demo.domain.MemberRepository;
 
-/*
- * 리턴 타입이 string인 경우, 문자열 경로와 일치하는 jsp 파일을 찾아 반환
- * 파일경로: /src/main/webapp/view + /v1/form.jsp
- * */
+// 회원 관리 요청을 처리하기 위한 컨트롤러 구현
 
-@Controller //컨트롤러를 의미하는 어노테이션 + 빈으로 등록됨
-@RequestMapping("/v2") // 사용자 요청을 /v2 주소로 매핑 (중간 경로)
+@Controller //해당 클래스를 컨트롤러로 지정하고, 빈으로 등록
+@RequestMapping("/v2") // 사용자 요청을 /v2 주소에 매핑 (중간경로)
 public class MemberController {
 	
 	MemberRepository repository = new MemberRepository();
-	
-	// 회원 폼 메소드
-    @GetMapping("/form") // get 요청을 /form 주소로 매핑
+		
+	// 회원 폼을 반환하는 메소드
+    @GetMapping("/form") // GET 요청을 /form 주소에 매핑
     public String method1() {
-        return "/v2/form";
+        return "/v2/form"; 
+        // /src/main/webapp/view/v2/form.jsp 파일을 반환
     }
     
-    // 회원 등록 메소드
-    // 사용자가 전달한 파라미터 받기
-    @PostMapping("/save") // post 요청을 /save 주소로 매핑
+    
+    // 회원 등록을 처리하는 메소드
+    // 사용자가 보낸 파라미터를 받아 처리
+    @PostMapping("/save") // POST 요청을 /save 경로에 매핑
     public String method2(@RequestParam(name = "username") String username, 
-    								@RequestParam(name = "password") String password, Model model) {
+    					  @RequestParam(name = "password") String password, 
+    					  Model model) {
 
-        // 회원 추가
+    	// 새로운 회원 객체 생성 후 저장소에 저장
         Member member = new Member(0, username, password);
         repository.save(member);
         
-        // 새로 추가한 회원 정보를 화면에 전달
+        // 추가된 회원 정보를 모델에 담아 JSP로 전달
         model.addAttribute("member", member);
     	
-        return "/v2/save"; //사용자에게 반환할 jsp 파일의 경로
+        return "/v2/save"; // 해당 경로의 JSP 파일을 반환
     }
 
 }

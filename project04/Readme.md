@@ -11,11 +11,11 @@
 폼 실행: http://localhost:8080/servlet/form
 저장 실행: http://localhost:8080/servlet/save
 
-mvc 모델1 
+JSP 
 폼 실행: http://localhost:8080/view/v1/form.jsp
 저장 실행: http://localhost:8080/view/v1/save.jsp
 
-mvc 모델2
+mvc 모델1
 폼 실행: http://localhost:8080/v2/form
 저장 실행: http://localhost:8080/v2/save
 
