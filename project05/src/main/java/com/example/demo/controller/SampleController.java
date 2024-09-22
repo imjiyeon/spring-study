@@ -41,8 +41,9 @@ public class SampleController {
 		model.addAttribute("dto", sampleDTO); // 화면에 객체 전달
 	}
 
-	// 하나의 메서드가 /ex5, /ex6, /ex7, /ex8 모든 요청을 처리
-	// 각 화면에 동일한 데이터를 전달하기 위한 것
+	// @GetMapping에 {}를 사용하여 여러 URL을 처리할 수 있음
+	// 예: /ex5, /ex6, /ex7, /ex8 요청이 들어오면 동일한 메소드가 호출됨
+	// URL은 다르지만 화면에 동일한 데이터를 전달
 	@GetMapping({"/ex5", "/ex6", "/ex7", "/ex8"})
 	public void ex5(Model model) {
 		List<SampleDTO> list = new ArrayList<>();
