@@ -6,14 +6,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-  <table>
-    <tr>
-      <th>이름</th>
+  <table> <!-- 테이블을 생성하는 태그 -->
+    <tr> <!-- 한 행을 나타내는 태그 -->
+      <th>이름</th> <!-- 헤더 셀 -->
       <th>나이</th>
       <th>주소</th>
     </tr>
     <tr>
-      <td>둘리</td>
+      <td>둘리</td> <!-- 데이터 셀 -->
       <td>20</td>
       <td>인천 구월동</td>
     </tr>

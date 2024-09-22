@@ -4,18 +4,40 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <style>
-    .target {
-     background: yellow;
+    table, th, td {
+     	border: 1px solid black;
     }
+    th, td {
+     	padding: 10px 30px;
+    }
+    table {
+		border-collapse: collapse;
+    }
+    /* CSS 추가 */
+    .target {
+		color: red; /* 텍스트 색상 설정 */
+	}
   </style>
 </head>
 <body>
 
-<!-- 조건문을 사용하여, 5의 배수일 때는 css의 클래스를 지정한다 -->
-<ul>
-	<th:block th:each="dto : ${list}">
-		<li th:class="${dto.no%5==0}?target" th:text="${dto}"></li>
-	</th:block>	  
-</ul>
+<table>
+  <tr>
+    <th>이름</th>
+    <th>나이</th>
+    <th>주소</th>
+  </tr>
+  
+  <th:block th:each="dto : ${list}">
+    <tr>
+      <td>[[${dto.name}]]</td>
+      <!-- 나이가 30살 이상이면 'target' 클래스 적용 -->
+      <td th:class="${dto.age>=30}?target:''">[[${dto.age}]]</td>
+      <td>[[${dto.address}]]</td>
+    </tr>
+  </th:block>
+  
+</table>
+
 </body>
 </html>

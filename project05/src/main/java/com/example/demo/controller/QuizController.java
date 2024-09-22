@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.dto.BookDTO;
 import com.example.demo.dto.PersonDTO;
-import com.example.demo.dto.SampleDTO;
 
 @Controller
 @RequestMapping("/quiz")
@@ -54,22 +53,13 @@ public class QuizController {
         model.addAttribute("arr", intArr);
     }
 
-    @GetMapping("/q6")
+    @GetMapping({"/q6", "/q7"})
     public void ex6(Model model){
         List<PersonDTO> dtoList = new ArrayList<>();
         dtoList.add(new PersonDTO("둘리",20,"인천 구월동"));
         dtoList.add(new PersonDTO("또치",30,"서울 신림동"));
         dtoList.add(new PersonDTO("도우너",40,"부산 문래동"));
         model.addAttribute("list", dtoList);
-    }
-    
-    @GetMapping("/q7")
-    public void ex7(Model model){
-    	List<SampleDTO> list = new ArrayList();
-    	for(int i=1; i<=20;i++) {
-    		list.add(new SampleDTO(i, i+"번", LocalDate.now()));
-    	}
-    	model.addAttribute("list", list);
     }
 
     @GetMapping({"/q8", "/q9"})
