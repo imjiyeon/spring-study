@@ -1,18 +1,18 @@
-<!-- 조각을 파라미터로 전달하기 -->
+<!-- fragment2.html를 복사하여 수정할 것 -->
 
 <!DOCTYPE html>
 <html>
 
-<!-- 현재 파일에 있는 조각을 exLayout3 페이지에 전달하기 -->
 <th:block th:replace="~{/layout/exLayout3 :: setContent(~{this::content})}">
 
-    <th:block th:fragment="content"> <!-- 조각만들기 -->
+    <th:block th:fragment="content">
 
-        <h1>조각2</h1>
+        <h1>조각2</h1> <!-- 내용 변경 -->
 
     </th:block>
 
 </th:block>
+
 
 
 

@@ -1,4 +1,4 @@
-<!-- 템플릿 레이아웃 만들기 (조각 가져오기) -->
+<!-- 템플릿 레이아웃 만들기 -->
 
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
@@ -6,7 +6,7 @@
 <style>
     .header {
         height: 20vh;
-        background-color: aqua;  /* pink로 변경 */
+        background-color: aqua;  /* 헤더의 배경색을 pink로 변경 */
     }
     .content {
         height: 30vh;
@@ -24,9 +24,11 @@
     <h1>HEADER</h1>
 </div>
 <div class="content" >
-    <!-- fragment.html 파일의 frag1 블록 가져오기 -->
-    <!-- ~{} : 조각표현식 -->
-    <!-- th:replace : 가져온 조각으로 기존의 내용을 교체함 -->
+	<!--<h1>CONTENT</h1>-->
+	
+    <!-- ~{} : 조각 표현식 -->
+    <!-- th:replace : 다른 파일의 내용으로 교체할 수 있도록 설정 -->
+    <!-- fragment.html 파일의 frag1 조각을 불러와서 이 위치에 삽입 -->
     <th:block th:replace = "~{layout/fragment :: frag1}"></th:block>
 </div>
 <div class="footer">
@@ -35,3 +37,11 @@
 
 </body>
 </html>
+
+<!-- 
+정적인 페이지를 호출할 때는 브라우저에서 직접 열 수 있다
+파일 선택한 후 우클릭 > Open With > Web browser 선택
+타임리프 템플릿을 렌더링할 때는 서버를 통해 호출해야 한다
+-->
+
+

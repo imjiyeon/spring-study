@@ -1,10 +1,10 @@
-<!-- 템플릿 레이아웃 -->
+<!-- 템플릿 레이아웃 만들기 -->
 
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<!-- setContent함수를 통해 content라는 파라미터 받기 -->
-<th:block th:fragment="setContent(content)"> <!-- 위쪽과 아래쪽에 블록태그 처리 -->
+<!-- 상단과 하단을 블록태그로 감싸기 -->
+<!-- setContent함수로 content라는 파라미터 받기 -->
+<th:block th:fragment="setContent(content)"> 
 
 <style>
     .header {
@@ -27,8 +27,8 @@
     <h1>HEADER</h1>
 </div>
 <div class="content" >
-    <th:block th:replace = "${content}"> <!-- 파라미터로 전달된 content 출력 -->
-    </th:block>
+	<!-- 파라미터로 전달된 content 출력 -->
+    <th:block th:replace = "${content}"> </th:block>
 </div>
 <div class="footer">
     <h1>FOOTER</h1>

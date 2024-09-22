@@ -1,15 +1,15 @@
-<!-- 조각을 파라미터로 전달하기 -->
+<!-- 코드 조각을 만들고 다른 페이지에 전달하기 -->
 
 <!DOCTYPE html>
 <html>
 
-<!-- 2.템플릿 파일에 조각 전달하기 -->
-<!-- th:replace : exLayout3 파일에 현재파일에 있는 조각을 전달 -->
-<!-- setContent(...) : setContent 조각의 content 변수 -->
+<!-- 2.템플릿 파일에 코드 조각 전달하기 -->
+<!-- th:replace : 현재 파일에 정의된 조각을 exLayout3 파일로 전달 -->
+<!-- setContent(...) : setContent 함수에 content 변수를 전달 -->
 
 <th:block th:replace="~{/layout/exLayout3 :: setContent(~{this::content})}">
 
-    <!-- 1.조각 만들기 -->
+    <!-- 1. 코드 조각 정의 -->
     <th:block th:fragment="content">
 
         <h1>조각1</h1>

@@ -1,4 +1,4 @@
-<!-- 템플릿 레이아웃 -->
+<!-- 템플릿 레이아웃 만들기 -->
 
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
@@ -24,6 +24,7 @@
     <h1>HEADER</h1>
 </div>
 <div class="content" >
+	<!-- fragment.html 파일의 frag2 조각을 불러와서 이 위치에 삽입 -->
     <th:block th:replace = "~{layout/fragment :: frag2}"></th:block>
 </div>
 <div class="footer">
