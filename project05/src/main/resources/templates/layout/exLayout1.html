@@ -1,7 +1,6 @@
 <!-- 템플릿 레이아웃 만들기 -->
 
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <style>
     .header {
@@ -29,7 +28,7 @@
     <!-- ~{} : 조각 표현식 -->
     <!-- th:replace : 다른 파일의 내용으로 교체할 수 있도록 설정 -->
     <!-- fragment.html 파일의 frag1 조각을 불러와서 이 위치에 삽입 -->
-    <th:block th:replace = "~{layout/fragment :: frag1}"></th:block>
+    <th:block th:replace = "~{layout/fragment :: frag1}"></th:block> <!-- block 태그 -> h태그 교체 -->
 </div>
 <div class="footer">
     <h1>FOOTER</h1>
