@@ -8,10 +8,14 @@
 </head>
 <body>
 
-    <h1>블록태그</h1>
-    <th:block th:each="dto: ${list}"> <!-- 블록태그로 타임리프 사용하기 -->
-        <p>[[${dto}]]</p> <!-- 블록태그를 사용하면 여러가지 하위태그를 넣을 수 있음 -->
-        <span>[[${dto}]]</span>
+    <h1>블록 태그</h1>
+
+    <p th:each="dto: ${list}">P태그</p>
+
+    <!-- 블록태그를 사용하면 여러가지 하위태그를 넣을 수 있음 -->
+    <th:block th:each="dto: ${list}">
+        <p>p태그</p>
+        <span>span태그</span>
     </th:block>
 
 </body>
