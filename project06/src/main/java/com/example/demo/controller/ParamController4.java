@@ -31,4 +31,10 @@ public class ParamController4 {
 		return "ok";
 	}
 
+//	@GetMapping("/")
+//	public String ex() {
+//		System.out.println();
+//		return "ok";
+//	}
+
 }
