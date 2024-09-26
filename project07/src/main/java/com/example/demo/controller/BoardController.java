@@ -40,7 +40,7 @@ public class BoardController {
 
     // 등록처리
     @PostMapping("/register")
-    // RedirectAttributes: 다른 주소로 리다이렉트할때 화면에 데이터를 전달하는 객체 (모델과 비슷)
+    // RedirectAttributes: 리다이렉트할 때 데이터를 전달하는 객체 (모델)
     // 화면에서 전달한 게시물 정보를 파라미터로 수집
     public String registerPost(BoardDTO dto, RedirectAttributes redirectAttributes) {
 
@@ -50,8 +50,8 @@ public class BoardController {
         // 리다이레트된 페이지(목록화면)에 새로운 게시물 번호 전달
         redirectAttributes.addFlashAttribute("msg", no);
         
-        // 게시물 목록 화면으로 리다이렉트 하기
-        // 리다이렉트? 새로운 URL을 다시 호출하는 것
+        // 목록 화면으로 리다이렉트
+        // 리다이렉트: 새로운 URL을 다시 호출하는 것
         return "redirect:/board/list"; //HTML파일X URL주소O
     }
 

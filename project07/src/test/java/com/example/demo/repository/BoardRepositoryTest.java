@@ -56,4 +56,14 @@ public class BoardRepositoryTest {
 		repository.deleteById(1);
 	}
 
+	@Test
+	void querydsl테스트() {
+
+
+
+	}
+
+
 }
+
+
