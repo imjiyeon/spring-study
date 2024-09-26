@@ -20,7 +20,7 @@ public interface BoardService {
 	void modify(BoardDTO dto);
 
 	// 게시물 삭제 메소드
-	int remove(int no);
+	void remove(int no);
 
 	// default 키워드를 사용하여 일반메소드 만들기
 	// dto를 엔티티로 변환하는 메소드

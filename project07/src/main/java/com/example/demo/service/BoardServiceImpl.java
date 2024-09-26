@@ -1,15 +1,16 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.BoardDTO;
-import com.example.demo.entity.Board;
-import com.example.demo.repository.BoardRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.dto.BoardDTO;
+import com.example.demo.entity.Board;
+import com.example.demo.repository.BoardRepository;
 
 @Service // 서비스 클래스로 지정
 public class BoardServiceImpl implements BoardService {
@@ -78,16 +79,14 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public int remove(int no) {
+    public void remove(int no) {
 
         Optional<Board> result = repository.findById(no);
 
+        // 게시물이 존재하면 삭제
         if (result.isPresent()) {
             repository.deleteById(no);
-            return 1; //성공
-        } else {
-            return 0; //실패
-        }
+        } 
 
     }
 

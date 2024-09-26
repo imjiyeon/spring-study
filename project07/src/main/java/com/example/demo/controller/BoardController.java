@@ -69,6 +69,7 @@ public class BoardController {
         model.addAttribute("dto", dto); // 화면에 게시물 정보 전달
     }
 
+    // 수정처리를 POST로 처리하는 이유는 HTML의 폼태그가 POST만 사용가능함    
     // 수정처리
     @PostMapping("/modify")
     public String modifyPost(BoardDTO dto, RedirectAttributes redirectAttributes) {
@@ -85,8 +86,11 @@ public class BoardController {
 
     // 삭제처리
     @PostMapping("/remove")
+    // 폼 데이터 중 no값만 받기
     // 단일 파라미터는 자동으로 매핑이 안되므로, @RequestParam을 사용해야함
     public String removePost(@RequestParam("no") int no) {
+    	
+    	// 게시물을 삭제하고 목록화면으로 이동
         service.remove(no);
         return "redirect:/board/list";
     }
