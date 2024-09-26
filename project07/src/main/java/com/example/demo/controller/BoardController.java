@@ -85,7 +85,8 @@ public class BoardController {
 
     // 삭제처리
     @PostMapping("/remove")
-    public String removePost(int no) {
+    // 단일 파라미터는 자동으로 매핑이 안되므로, @RequestParam을 사용해야함
+    public String removePost(@RequestParam("no") int no) {
         service.remove(no);
         return "redirect:/board/list";
     }
