@@ -23,11 +23,10 @@ public class BoardRepositoryTest2 {
 	BoardRepository repository;
 
 	@Test
-	void 게시물등록() {
+	void 테스트용게시물등록() {
+		
 		Board board = Board.builder().title("1번글").content("안녕하세요").writer("둘리").build();
-
 		Board board2 = Board.builder().title("2번글").content("안녕").writer("둘리").build();
-
 		Board board3 = Board.builder().title("3번글").content("하이").writer("또치").build();
 
 		repository.save(board);
@@ -38,21 +37,23 @@ public class BoardRepositoryTest2 {
 	@Test
 	void 단일항목검색테스트() {
 
+		// 페이징 조건으로 첫번째 페이지, 데이터 10개 설정
 		Pageable pageable = PageRequest.of(0, 10);
 
-		// Q도메인 클래스 가져오기
+		// Q 도메인 클래스 생성
 		QBoard qBoard = QBoard.board;
 
 		// builder 객체 생성
 		BooleanBuilder builder = new BooleanBuilder();
 
-		// 원하는 쿼리 조건 만들기
-		// 엔티티의 필드를 꺼내고 조건 넣기
+		// 검색 조건 작성하기
+		// 작성자에 '둘리'가 포함된 게시물 검색
 		BooleanExpression expression = qBoard.writer.contains("둘리");
 
-		// 조건 결합
+		// builder에 조건을 추가
 		builder.and(expression);
 
+		// 조건을 사용하여 검색
 		Page<Board> result = repository.findAll(builder, pageable);
 
 		List<Board> list = result.getContent();
@@ -62,9 +63,9 @@ public class BoardRepositoryTest2 {
 		}
 
 	}
-	// SQL에 LIKE 연산자가 추가된다 
-	// ESCAPE '!'는 이스케이프 문자로 % 부분을 특수기호가 아닌 문자 그대로 사용하겠다는 의미
-	// LIKE 검색을 할때는 키워드에 %가 붙어야 한다
+	// SQL에 LIKE 연산자를 사용하며,
+	// ESCAPE '!'는 % 부분을 문자 그대로 처리하기 위한 이스케이프 문자로이다
+	// LIKE 검색 시 키워드에 %가 추가된다
 
 	@Test
 	void 다중항목검색테스트1() {
@@ -73,13 +74,13 @@ public class BoardRepositoryTest2 {
 		QBoard qBoard = QBoard.board;
 		BooleanBuilder builder = new BooleanBuilder();
 		
-		// 원하는 쿼리 조건 만들기
-		// 내용과 작성자로 조건 만들기
+		// 검색 조건 작성하기
+		// 내용에 '안녕'이 포함되고 작성자에 '둘리'가 포함되는 조건 생성
 		BooleanExpression expression = qBoard.content.contains("안녕");
 		builder.and(expression);
 		BooleanExpression expression2 = qBoard.writer.contains("둘리");
 		
-		// 조건 결합하기
+		// 조건을 AND로 연결
 		builder.and(expression2);
 		Page<Board> result = repository.findAll(builder, pageable);
 		List<Board> list = result.getContent();
@@ -88,7 +89,7 @@ public class BoardRepositoryTest2 {
 			System.out.println(b);
 		}
 	}
-	// SQL에 AND 키워드가 추가된다
+	// SQL에 AND 키워드가 사용된다
 	
 	@Test
 	void 다중항목검색테스트2() {
@@ -97,13 +98,13 @@ public class BoardRepositoryTest2 {
 		QBoard qBoard = QBoard.board;
 		BooleanBuilder builder = new BooleanBuilder();
 		
-		// 원하는 쿼리 조건 만들기
-		// "내용이 안녕하세요 또는 작성자가 또치"인 조건 만들기
+		// 검색 조건 작성하기
+		// 내용에 '안녕하세요'가 포함되거나 작성자에 '또치'가 포한되는 조건 생성
 		BooleanExpression expression = qBoard.content.contains("안녕하세요");
 		
 		BooleanExpression expression2 = qBoard.writer.contains("또치");
 		
-		// 조건 결합하기
+		// 조건을 OR로 연결
 		BooleanExpression allExpression = expression.or(expression2);
 		
 		builder.and(allExpression);

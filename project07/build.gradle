@@ -35,7 +35,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client
 	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.4.1'	
 	
-	// quertDSL 추가
+	// querydsl 라이브러리 추가
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
 	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
@@ -47,7 +47,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-// quertDSL 관련 설정 추가
+// querydsl 관련 설정 추가
 def querydslDir = "src/main/generated"
 
 sourceSets {
