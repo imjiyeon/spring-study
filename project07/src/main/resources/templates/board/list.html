@@ -29,7 +29,12 @@
 					<!-- 링크를 클릭하면 상세화면으로 이동 -->
 					<th>
 						<!-- (키=값) 부분은 (/board/read?no=1) 으로 처리됨 -->
-						<a th:href="@{/board/read(no = ${dto.no})}">[[${dto.no}]]</a> 
+						<!--<a th:href="@{/board/read(no = ${dto.no})}">[[${dto.no}]]</a> -->
+					
+						<!-- 상세조회 링크 수정. 페이지 파라미터 추가 -->
+						<a th:href="@{/board/read(no = ${dto.no}, page= ${list.number + 1})}">
+							[[${dto.no}]]
+						</a>
 					</th>
 					<td>[[${dto.title}]]</td>
 					<td>[[${dto.writer}]]</td>
@@ -83,7 +88,7 @@
 
 <!-- 4. 페이지 번호를 클릭하면 해당 페이지로 이동하도록 처리 (최종) -->
 <!-- a 태그에 list 주소를 입력하고, 선택한 페이지 번호를 파라미터로 전달 -->
-<!--<ul class="pagination h-100 justify-content-center align-items-center">
+<ul class="pagination h-100 justify-content-center align-items-center">
 	<th:block th:each="page : ${#numbers.sequence(1, list.totalPages)}">
 		<th:block th:if="${list.number+1 == page}">
 			<li class="page-item active">					
@@ -96,7 +101,7 @@
 			</li>
 		</th:block>
 	</th:block>
-</ul>-->
+</ul>
 
 		<!--인라인 속성을 사용하여 타임리프 적용 (데이터 자료형이 자동으로 처리됨)-->
 		<!--등록이 끝나고 난 후에 목록화면에서 등록처리결과 보여주기-->

@@ -69,11 +69,20 @@ public class BoardController {
     }
 
     // 상세화면
-    @GetMapping("/read")
-    public void read(@RequestParam(name = "no") int no, Model model) {
-        BoardDTO dto = service.read(no);
-        model.addAttribute("dto", dto);
-    }
+//    @GetMapping("/read")
+//    public void read(@RequestParam(name = "no") int no, Model model) {
+//        BoardDTO dto = service.read(no);
+//        model.addAttribute("dto", dto);
+//    }
+    
+	/* 상세화면 메소드 수정 */
+    // 페이지 파라미터 추가
+	@GetMapping("/read")
+	public void read(@RequestParam(name = "no") int no, @RequestParam(defaultValue = "0", name = "page") int page, Model model) { //페이지 번호 파라미터 추가
+		BoardDTO dto = service.read(no);
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page); //화면에 페이지번호 전달
+	}
 
     // 수정화면
     @GetMapping("/modify")

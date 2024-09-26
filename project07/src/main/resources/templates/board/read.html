@@ -41,8 +41,13 @@
         </a>
 
         <!-- 버튼을 클릭하면 목록화면으로 이동 -->
-        <a th:href="@{/board/list}">
+<!--        <a th:href="@{/board/list}">
         	<button type="button" class="btn btn-info">목록으로</button>
+        </a>-->
+
+        <!-- 목록페이지 링크 수정. 페이지 파라미터 추가 -->
+        <a th:href="@{/board/list(page=${page})}">
+            <button type="button" class="btn btn-info">목록으로</button>
         </a>
 
     </th:block>
