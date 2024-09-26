@@ -1,8 +1,7 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,12 +25,26 @@ public class BoardController {
     public void main() {
     }
 
-    // 목록화면
-    @GetMapping("/list")
-    public void list(Model model) {
-        List<BoardDTO> list = service.getList(); // 서비스로 게시물 목록 가져오기
-        model.addAttribute("list", list); // 화면에 게시물 리스트 전달
-    }
+//    // 목록화면
+//    @GetMapping("/list")
+//    public void list(Model model) {
+//        List<BoardDTO> list = service.getList(); // 서비스로 게시물 목록 가져오기
+//        model.addAttribute("list", list); // 화면에 게시물 리스트 전달
+//    }
+    
+	// 목록 메소드 다시 만들기
+	@GetMapping("/list")
+	// 페이지 번호 파라미터 추가 (기본값은 1페이지)
+	public void list(@RequestParam(defaultValue = "0", name = "page") int page, Model model) {
+		// 게시물 목록 조회
+		Page<BoardDTO> list = service.getList(page); 
+		// 화면에 게시물 목록과 페이지정보 전달
+		model.addAttribute("list", list);	
+		System.out.println("전체 페이지 수: " + list.getTotalPages());
+		System.out.println("전체 게시물 수: " + list.getTotalElements());
+		System.out.println("현재 페이지 번호: " + (list.getNumber() + 1));
+		System.out.println("페이지에 표시할 게시물 수: " + list.getNumberOfElements());
+	}
 
     // 등록화면
     @GetMapping("/register")
