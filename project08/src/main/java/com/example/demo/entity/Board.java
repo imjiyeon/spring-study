@@ -1,34 +1,44 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
+@Table(name = "tbl_board")
 @Getter
 @Setter
-@ToString(exclude = "writer") //게시물을 출력할 때 회원정보는 제외
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Board extends BaseEntity {
+public class Board extends BaseEntity { // 등록시간필드와 수정시간필드 상속받기
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int no;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	int no; // 글번호
 
-    @Column(length = 100, nullable = false)
-    String title;
+	@Column(length = 100, nullable = false)
+	String title; // 제목
 
-    @Column(length = 1500, nullable = false)
-    String content;
+	@Column(length = 1500, nullable = false)
+	String content; // 내용
 
 //    @Column(length = 50, nullable = false)
-//    private String writer;
+//    String writer; //작성자
 
-    /* 작성자 필드는 외래키이며, 회원 엔티티를 참조한다 */
-    // 부모인 Member 테이블의 PK를 참조하게 됨
-    @ManyToOne //관계차수는 1:N
-    Member writer; //작성자
+	// 작성자 필드가 외래키로 설정되어, 부모인 Member 테이블의 PK를 참조함
+	@ManyToOne // 관계차수는 1:N
+	Member writer; // 작성자
 
 }

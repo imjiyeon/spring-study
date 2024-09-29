@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.MemberDTO;
-import com.example.demo.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -12,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.dto.MemberDTO;
+import com.example.demo.service.MemberService;
+
 @Controller
 @RequestMapping("/member")
 public class MemberController {
@@ -19,12 +20,13 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 
+	// 목록 화면을 반환하는 메소드
 	@GetMapping("/list")
-	public void list(@RequestParam(name = "page", defaultValue = "0") int page, Model model) { //파라미터 추가
+	public void list(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
 		Page<MemberDTO> list = service.getList(page);
 		model.addAttribute("list", list);	
 	}
-
+	
 	@GetMapping("/register")
 	public void register() {
 	}

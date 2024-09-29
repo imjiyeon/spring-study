@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<th:block th:fragment="setContent(content)"> <!-- 템플릿 조각 받기 -->
+<th:block th:fragment="setContent(content)"> <!-- 파라미터로 조각코드 받기 -->
 
 <head>
     <meta charset="utf-8" />
@@ -26,12 +26,12 @@
     <div class="border-end bg-white" id="sidebar-wrapper">
         <div class="sidebar-heading border-bottom bg-light">Start Bootstrap</div>
         <div class="list-group list-group-flush">
-<!--            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>-->
-<!--            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>-->
-<!--            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>-->
-<!--            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>-->
-<!--            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>-->
-<!--            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>-->
+<!--            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>-->
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/member/list">회원관리</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/board/list">게시물관리</a>
         </div>
@@ -62,7 +62,7 @@
         </nav>
         <!-- Page content-->
         <div class="container-fluid">
-            <th:block th:replace = "${content}"></th:block> <!-- 템플릿 조각 삽입 -->
+            <th:block th:replace = "${content}"></th:block> <!-- 전달받은 파라미터 사용하기 -->
         </div>
     </div>
 </div>

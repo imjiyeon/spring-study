@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 2.문서 안에 있는 조각을 basic 페이지에 전달 -->
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content"> <!-- 1.조각만들기 -->
+
+        <h1>exSidebar Page</h1>
+
+    </th:block>
+
+</th:block>
+
+
+

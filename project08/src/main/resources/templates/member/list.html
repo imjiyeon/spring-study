@@ -18,11 +18,11 @@
 			<!-- 테이블 처리 -->
 			<tbody>
 
-				[[${list}]]
+				<!--[[${list}]]-->
 
 				<tr th:each="dto : ${list}">
 
-					[[${dto}]]
+					<!--[[${dto}]]-->
 
 					<th>
 						<a th:href="@{/member/read(id = ${dto.id}, page= ${list.number + 1})}">
