@@ -64,9 +64,8 @@ public class BoardRepositoryTest3 {
 		}
 
 	}
-	// SQL에 LIKE 연산자를 사용하며,
-	// ESCAPE '!'는 % 부분을 문자 그대로 처리하기 위한 이스케이프 문자로이다
-	// LIKE 검색 시 키워드 앞뒤에 %를 추가하여 검색한다
+	// contains함수를 사용하여 SQL에 LIKE 연산자가 추가되었고, LIKE 키워드 앞뒤에 %가 추가되었다
+	// ESCAPE '!'는 % 부분을 문자 그대로 처리하기 위한 이스케이프 문자이다
 
 	@Test
 	void 다중항목검색테스트1() {
@@ -74,6 +73,8 @@ public class BoardRepositoryTest3 {
 		Pageable pageable = PageRequest.of(0, 10);
 		QBoard qBoard = QBoard.board;
 		BooleanBuilder builder = new BooleanBuilder();
+		
+		// 조건: 내용 + 작성자
 		
 		// 첫번째 조건: 내용에 '안녕'이 포함되는 게시물
 		BooleanExpression expression = qBoard.content.contains("안녕");
@@ -90,7 +91,7 @@ public class BoardRepositoryTest3 {
 			System.out.println(b);
 		}
 	}
-	// SQL에 AND 키워드가 사용된다
+	// and 함수를 사용하여 SQL에 AND 키워드가 추가되었다
 	
 	@Test
 	void 다중항목검색테스트2() {
@@ -99,12 +100,14 @@ public class BoardRepositoryTest3 {
 		QBoard qBoard = QBoard.board;
 		BooleanBuilder builder = new BooleanBuilder();
 		
-		// 첫번째 조건: 내용에 '안녕하세요'이 포함되는 게시물
-		BooleanExpression expression = qBoard.content.contains("안녕하세요");
+		// 조건: 게시물 번호 + 내용
 		
-		// 두번째 조건: 작성자에 '또치'가 포함되는 게시물
-		BooleanExpression expression2 = qBoard.writer.contains("또치");
+		// 첫번째 조건: 게시물 번호가 2보다 큰 게시물
+		BooleanExpression expression = qBoard.no.gt(2);
 		
+		// 두번째 조건: 내용에 '안녕하세요'이 포함되는 게시물
+		BooleanExpression expression2 = qBoard.content.contains("안녕하세요");
+
 		// 조건을 OR로 연결
 		BooleanExpression allExpression = expression.or(expression2);
 		
@@ -117,6 +120,7 @@ public class BoardRepositoryTest3 {
 			System.out.println(b);
 		}
 	}
-	// SQL에 OR 키워드가 추가된다
+	// gt 함수를 사용하여 > 비교연산자가 추가되었고
+	// or 함수를 사용하여 SQL에 OR 키워드가 추가되었다
 
 }
