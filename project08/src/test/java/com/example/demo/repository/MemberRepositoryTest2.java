@@ -18,15 +18,10 @@ public class MemberRepositoryTest2 {
 
 	@Autowired
 	BoardRepository boardRepository;
-	
+		
+	// 게시물을 작성한 회원 삭제
 	@Test
-	public void 게시물을작성하지않은_회원삭제() {
-		// 게시물을 작성하지 않은 회원은 바로 삭제할 수 있음
-		memberRepository.deleteById("user2");
-	}
-	
-	@Test
-	public void 게시물을작성한_회원삭제() {
+	public void 첫번째회원삭제() {
 		// 게시물이 작성한 회원은 바로 삭제할 수 없음
 		// 회원을 삭제하려면 회원이 작성한 게시물을 먼저 삭제해야함
 		// 이를 위해 boardRepository에 삭제 메소드 추가
@@ -39,6 +34,13 @@ public class MemberRepositoryTest2 {
 		memberRepository.deleteById("user1");
 		
 		// SQL에 작성자의 아이디가 조건으로 추가됨
+	}
+	
+	// 게시물을 작성하지않은 회원 삭제
+	@Test
+	public void 두번째회원삭제() {
+		// 게시물을 작성하지 않은 회원은 바로 삭제할 수 있음
+		memberRepository.deleteById("user2");
 	}
 	
 	@Test

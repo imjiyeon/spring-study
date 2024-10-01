@@ -42,3 +42,10 @@ public class Board extends BaseEntity { // 등록시간필드와 수정시간필
 	Member writer; // 작성자
 
 }
+
+// 기존 테이블을 삭제하고, 새로 생성
+// 테이블이 생성될 때 SQL을 확인하면, FK가 설정됨
+// 실제 테이블에서 외래키와 엔티티 관계도 확인
+
+
+

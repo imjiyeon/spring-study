@@ -16,7 +16,7 @@ public class BoardServiceTest {
 	public void 게시물등록() {
 
 		BoardDTO dto = BoardDTO.builder()
-				.title("반갑습니다").content("반갑습니다").writer("user1")
+				.title("하이").content("하이").writer("user1")
 				.build();
 
 		int no = service.register(dto);

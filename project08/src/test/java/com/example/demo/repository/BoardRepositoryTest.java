@@ -36,17 +36,26 @@ public class BoardRepositoryTest {
 
 	@Test
 	void 게시물등록() {
-		// 먼저 테이블에 존재하는 회원 정보를 생성함 후, 
-		// 게시물 엔티티의 작성자 필드에 입력해야함
+		
+		// 먼저 테이블에 존재하는 회원 정보를 생성
+		// 이때, 회원 엔티티는 PK만 입력하면됨
 		Member member = Member.builder().id("user1").build();
 
+		// 작성자 필드에 회원 정보 입력
 		Board board = Board.builder()
 									.title("안녕하세요")
 									.content("안녕하세요")
-									.writer(member) // 작성자 필드에 회원 정보 입력
+									.writer(member)
 									.build();
-
 		repository.save(board);
+		
+		// 하명의 회원이 게시물을 여러개 작성할 수 있음
+		Board board2 = Board.builder()
+									.title("반갑습니다")
+									.content("반갑습니다")
+									.writer(member)
+									.build();
+		repository.save(board2);
 	}
 
 	@Test
@@ -55,7 +64,7 @@ public class BoardRepositoryTest {
 		Board board = optional.get();
 		System.out.println(board); //회원정보가 함께 출력됨
 		
-		// SQL에 member 테이블과의 join이 추가됨
+		// SQL에서 board테이블과 member 테이블과 join 처리됨
 	}
 
 }
