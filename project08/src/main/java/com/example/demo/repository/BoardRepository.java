@@ -15,7 +15,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 public interface BoardRepository extends JpaRepository<Board, Integer>, QuerydslPredicateExecutor<Board> {
 
-	// 특정 작성자가 작성한 모든 게시물을 삭제하는 메소드
+	// 특정 회원이 작성한 모든 게시물을 삭제하는 메소드
 	@Modifying //INSERT, UPDATE, DELETE 메소드 작성시 필요
 	@Query("delete from Board where writer = :member")
 	// 파라미터는 엔티티의 참조 타입에 따라 아이디 값이 아닌 member 엔티티를 사용해야함

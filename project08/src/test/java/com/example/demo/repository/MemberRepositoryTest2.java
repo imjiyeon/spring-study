@@ -25,8 +25,6 @@ public class MemberRepositoryTest2 {
 		// 게시물이 작성한 회원은 바로 삭제할 수 없음
 		// 회원을 삭제하려면 먼저 회원이 작성한 게시물을 삭제해야함
 
-		Member member = Member.builder().id("user1").build();
-
 		// 게시물 삭제 후, 회원을 삭제
 		memberRepository.deleteById("user1");
 
