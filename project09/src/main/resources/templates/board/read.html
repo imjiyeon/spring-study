@@ -43,7 +43,7 @@
             <div class="card-body">
                 <textarea class="form-control" id="commentContent" rows="3">
                 </textarea>
-                <!-- 클릭이벤트 처리 -->
+                <!-- 버튼에 클릭 이벤트 함수 설정 -->
                 <button type="button" class="btn btn-secondary" onclick="registerComment()">댓글등록</button>
             </div>
         </div>
@@ -66,22 +66,45 @@
 
         	function showComment(){
         		 var board = [[${dto}]];
-        		 let comment_div = $('#commentdiv');
+        		 let comment_div = document.getElementById('commentdiv');
 
      		     $.ajax({
      		      type: "GET",
      		      url: "/comment/list?boardNo="+board.no,
      		      success: function(response){
      		    	  if(response){
-     		    		  comment_div.empty(); //자식 엘리먼트 모두 지우기
+     		    		  comment_div.innerHTML = ''; //자식 요소 모두 지우기
      		    		  commentlist = response;
      		    		  for(i in commentlist){
+     		    			 // 댓글 하나 꺼내기
      		    			 let comment = commentlist[i];
-     		    			 let writer_span = '<span class="fw-bold strong mar">'+comment.writer+'</span>';
-     		    			 let content_span = '<span class="mar"> '+comment.content+' </span>';
-     		    			 let delete_btn = '<a href="javascript:removeComment('+comment.commentNo+')">삭제</a>';
-     		    			 let comment_html = writer_span + content_span + delete_btn + '</br>';
-     		    			 comment_div.append(comment_html);
+     		    			 // 작성자 span 태그 생성
+                             let writerSpan = document.createElement('span');
+                             // 스타일을 위한 클래스 설정
+                             writerSpan.className = 'fw-bold strong mar';
+                             // 댓글 작성자 출력
+                             writerSpan.textContent = comment.writer;
+
+                             // 내용 span 태그 생성
+                             let contentSpan = document.createElement('span');
+                             contentSpan.className = 'mar';
+                             // 댓글 내용 출력
+                             contentSpan.textContent = comment.content;
+
+                             // 댓글 삭제 버튼 생성
+                             let deleteBtn = document.createElement('a');
+                             // 클릭 이벤트 설정
+                             deleteBtn.href = 'javascript:removeComment(' + comment.commentNo + ')';
+                             deleteBtn.textContent = '삭제';
+
+                             // 줄바꿈 태그 생성
+                             let lineBreak = document.createElement('br');
+
+                             // div에 작성자, 내용, 삭제 버튼, 줄바꿈 추가
+                             comment_div.appendChild(writerSpan);
+                             comment_div.appendChild(contentSpan);
+                             comment_div.appendChild(deleteBtn);
+                             comment_div.appendChild(lineBreak);
      		    		  }
      		    	  }
      		        }
