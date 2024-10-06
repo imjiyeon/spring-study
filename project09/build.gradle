@@ -1,13 +1,17 @@
 plugins {
 	id 'java'
-	id 'war'
-	id 'org.springframework.boot' version '3.0.2'
-	id 'io.spring.dependency-management' version '1.1.0'
+	id 'org.springframework.boot' version '3.3.4'
+	id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
 
 configurations {
 	compileOnly {
@@ -25,22 +29,31 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.1.2'
-
-	// 단위테스트 에러 해결
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.4.1'	
+	
+	// querydsl 라이브러리
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+	
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
 
+// querydsl 관련 설정
+def querydslDir = "src/main/generated"
 
-
-
-
-
-
-
+sourceSets {
+main.java.srcDirs += [ querydslDir ]
+}
+tasks.withType(JavaCompile) {
+options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
+}
+clean.doLast {
+file(querydslDir).deleteDir()
+}

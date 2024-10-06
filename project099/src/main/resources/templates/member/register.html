@@ -39,7 +39,7 @@
     	 <div class="row justify-content-center">
     		<div class="input-div">
 	    	    <h1 class="mt-4">Sign Up</h1>
-	    	 	<form action="/member/register" th:method="post">
+	    	 	<form th:action="@{/member/register}" th:method="post">
 		            <div class="form-group">
 		                <label >아이디</label>
 		                <input type="text" class="form-control" name="id">
@@ -57,10 +57,9 @@
         	</div>
     	 </div>
 
-		 <!-- 회원가입에 실패하면 실패메세지를 띄우는 이벤트 처리 -->
+		 <!-- 회원가입 실패 이벤트 처리 -->
     	 <script th:inline="javascript">
-    	 	//$(document).ready(): html 문서가 생성될 때 이벤트를 처리하는 이벤트 핸들러
-			$(document).ready(function(){
+			$(document).ready(function(){ //html 문서가 만들어질때 호출되는 함수
 			  var msg = [[${msg}]] //실패메시지 저장
 			  if(msg != null){
 				  alert(msg); //실패메시지 팝업
