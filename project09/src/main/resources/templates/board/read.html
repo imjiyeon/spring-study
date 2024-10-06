@@ -60,9 +60,13 @@
         <!-- 댓글 이벤트 처리 -->
         <script th:inline="javascript">
 
-        	$(document).ready(function() {
-        		showComment();
-        	})
+            // 책의 예제와 같이 AJAX 호출 부분만 jQuery를 사용하고,
+            // 나머지는 바닐라 자바스크립트를 사용할 예정입니다
+
+            // 페이지 로드 시 showComment 함수를 호출하여 댓글 목록을 출력
+            document.addEventListener("DOMContentLoaded", () => {
+                showComment();
+            });
 
         	function showComment(){
         		 var board = [[${dto}]];
