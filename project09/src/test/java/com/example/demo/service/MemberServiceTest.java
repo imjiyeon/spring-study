@@ -31,8 +31,8 @@ public class MemberServiceTest {
 
 	@Test
 	public void 회원목록조회() {
-		Page<MemberDTO> page = service.getList(1);
-		List<MemberDTO> list = page.getContent();
+		Page<MemberDTO> page = service.getList(1); //첫번째 페이지 조회
+		List<MemberDTO> list = page.getContent(); //회원 목록 꺼내기
 		for(MemberDTO dto : list) {
 			System.out.println(dto);
 		}

@@ -3,7 +3,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-
+@Table(name = "tbl_comment")
 @Entity
 @Getter
 @Setter

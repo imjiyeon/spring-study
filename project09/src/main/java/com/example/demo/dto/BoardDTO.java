@@ -18,15 +18,10 @@ import java.time.LocalDateTime;
 public class BoardDTO {
 
     int no;
-
     String title;
-
     String content;
-
     String writer;
-
     LocalDateTime regDate;
-
     LocalDateTime modDate;
-
 }
+

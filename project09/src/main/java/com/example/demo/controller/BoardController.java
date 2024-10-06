@@ -17,9 +17,10 @@ import com.example.demo.service.BoardService;
 @RequestMapping("/board")
 public class BoardController {
 
-	@Autowired
-	BoardService service;
+    @Autowired
+    BoardService service;
 
+    // 목록화면
 	@GetMapping("/list")
 	public void list(@RequestParam(defaultValue = "0", name = "page") int page, Model model) {
 		Page<BoardDTO> list = service.getList(page); 
@@ -30,41 +31,47 @@ public class BoardController {
 		System.out.println("페이지에 표시할 게시물 수: " + list.getNumberOfElements());
 	}
 
-	@GetMapping("/register")
-	public void register() {
-	}
+    // 등록화면
+    @GetMapping("/register")
+    public void register() {
+    }
 
-	@PostMapping("/register")
-	public String registerPost(BoardDTO dto, RedirectAttributes redirectAttributes) {
-		int no = service.register(dto);
-		redirectAttributes.addFlashAttribute("msg", no);
-		return "redirect:/board/list";
-	}
+    // 등록처리
+    @PostMapping("/register")
+    public String registerPost(BoardDTO dto, RedirectAttributes redirectAttributes) {
+        int no = service.register(dto);
+        redirectAttributes.addFlashAttribute("msg", no);
+        return "redirect:/board/list";
+    }
 
+    // 상세화면
 	@GetMapping("/read")
 	public void read(@RequestParam(name = "no") int no, @RequestParam(defaultValue = "0", name = "page") int page, Model model) { //페이지 번호 파라미터 추가
 		BoardDTO dto = service.read(no);
 		model.addAttribute("dto", dto);
-		model.addAttribute("page", page); //화면에 페이지번호 전달
+		model.addAttribute("page", page);
 	}
 
-	@GetMapping("/modify")
-	public void modify(@RequestParam(name = "no") int no, Model model) {
-		BoardDTO dto = service.read(no);
-		model.addAttribute("dto", dto);
-	}
+    // 수정화면
+    @GetMapping("/modify")
+    public void modify(@RequestParam(name = "no") int no, Model model) {
+        BoardDTO dto = service.read(no);
+        model.addAttribute("dto", dto);
+    }
 
-	@PostMapping("/modify")
-	public String modifyPost(BoardDTO dto, RedirectAttributes redirectAttributes) {
-		service.modify(dto);
-		redirectAttributes.addAttribute("no", dto.getNo());
-		return "redirect:/board/read";
-	}
+    // 수정처리
+    @PostMapping("/modify")
+    public String modifyPost(BoardDTO dto, RedirectAttributes redirectAttributes) {
+        service.modify(dto);
+        redirectAttributes.addAttribute("no", dto.getNo());
+        return "redirect:/board/read";
+    }
 
-	@PostMapping("/remove")
-	public String removePost(int no) {
-		service.remove(no);
-		return "redirect:/board/list";
-	}
+    // 삭제처리
+    @PostMapping("/remove")
+    public String removePost(@RequestParam("no") int no) {
+        service.remove(no);
+        return "redirect:/board/list";
+    }
 
 }

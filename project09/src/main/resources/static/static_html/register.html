@@ -17,7 +17,7 @@
 		<script src="/js/scripts.js"></script>
 		<!-- JS 라이브러리 추가 -->
 		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-		<style>
+        <style>
 		    body {
     			background:#efefef;
 		    }
@@ -39,33 +39,26 @@
     	 <div class="row justify-content-center">
     		<div class="input-div">
 	    	    <h1 class="mt-4">Sign Up</h1>
-	    	 	<form action="/member/register" th:method="post">
+	    	 	<form action="" method="">
 		            <div class="form-group">
 		                <label >아이디</label>
-		                <input type="text" class="form-control" name="id">
+		                <input type="text" class="form-control" name="">
 		            </div>
 		            <div class="form-group">
 		                <label >패스워드</label>
-		                <input type="password" class="form-control" name="password">
+		                <input type="password" class="form-control" name="">
 		            </div>
 				    <div class="form-group">
 		                <label >이름</label>
-		                <input type="text" class="form-control" name="name">
+		                <input type="text" class="form-control" name="">
 		            </div>
 		            <button type="submit" class="btn btn-primary">등록</button>
 	        	</form>
         	</div>
     	 </div>
 
-		 <!-- 회원가입에 실패하면 실패메세지를 띄우는 이벤트 처리 -->
-    	 <script th:inline="javascript">
-    	 	//$(document).ready(): html 문서가 생성될 때 이벤트를 처리하는 이벤트 핸들러
-			$(document).ready(function(){
-			  var msg = [[${msg}]] //실패메시지 저장
-			  if(msg != null){
-				  alert(msg); //실패메시지 팝업
-			  }
-			});
-		</script>
+		 <script th:inline="javascript">
+
+		 </script>
     </body>
 </html>

@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -16,29 +14,57 @@ public class BoardRepositoryTest {
 
 	@Autowired
 	BoardRepository repository;
-
+	
 	@Test
-	public void 게시물등록() {
-		Member member1 = Member.builder().id("user1").build();
-		List<Board> list = new ArrayList<>();
-		list.add(new Board(0,"1번글","내용입니다", member1));
-		list.add(new Board(0,"2번글","내용입니다", member1));
-		list.add(new Board(0,"3번글","내용입니다", member1));
-		repository.saveAll(list);
+	void 게시물등록_잘못된방법() {
+
+		// 작성자 필드에 사용할 회원 엔티티 생성
+		Member member = Member.builder().id("둘리").build();
+
+		// 회원 테이블에 존재하지 않는 회원을 작성자로 사용하면 에러남
+		Board board = Board.builder()
+									.title("안녕하세요")
+									.content("안녕하세요")
+									.writer(member)
+									.build();
+
+		repository.save(board); //에러남
+		//com.example.demo.entity.Board.writer -> com.example.demo.entity.Member
 	}
 
 	@Test
-	public void 없는아이디로게시물등록하기() {
-		Member member = Member.builder().id("user2").build();
-		Board board = new Board(0,"4번글","내용입니다", member);
+	void 게시물등록() {
+		
+		// 테이블에 존재하는 회원 정보로 엔티티 생성 (PK만 필요)
+		Member member = Member.builder().id("user1").build();
+
+		// 작성자 필드에 회원 정보 입력
+		Board board = Board.builder()
+									.title("안녕하세요")
+									.content("안녕하세요")
+									.writer(member)
+									.build();
 		repository.save(board);
+		
+		// 한명의 회원이 여러개의 게시물을 작성할 수 있음
+		Board board2 = Board.builder()
+									.title("반갑습니다")
+									.content("반갑습니다")
+									.writer(member)
+									.build();
+		repository.save(board2);
 	}
 
-    @Test
-    public void 게시물단건조회(){
-        Optional<Board> optional =  repository.findById(1);
-        Board board = optional.get();
-        System.out.println(board);
-    }
+	@Test
+	public void 게시물조회() {
+		
+		Optional<Board> optional = repository.findById(1);
+		
+		Board board = optional.get();
+		
+		System.out.println(board); //회원정보도 함께 출력됨
+		
+		// SQL에서 board 테이블과 member 테이블이 join 처리됨
+	}
 
 }
