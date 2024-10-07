@@ -40,7 +40,7 @@
     		<div class="input-div">
 	    	    <h1 class="mt-4">Sign Up</h1>
 				<!-- 등록처리 주소 변경 -->
-				<form th:action="@{/register}" th:method="post">
+	    	 	<form action="/register" method="post">
 		            <div class="form-group">
 		                <label >아이디</label>
 		                <input type="text" class="form-control" name="id">
@@ -56,22 +56,25 @@
 					<!-- 등급 필드 추가 -->
 					<div class="form-group">
 						<div class="form-check form-check-solid">
+							<!-- name과 value 속성 입력 -->
 							<input class="form-check-input"  type="radio" id="user" name="role" value="ROLE_USER" checked>
 							<label class="form-check-label" for="user">일반사용자</label>
 						</div>
 						<div class="form-check form-check-solid">
+							<!-- name과 value 속성 입력 -->
 							<input class="form-check-input" type="radio" id="admin" name="role" value="ROLE_ADMIN">
 							<label class="form-check-label" for="admin">관리자</label>
 						</div>
 					</div>
-		            <button type="submit" class="btn btn-primary">등록</button>
+
+					<button type="submit" class="btn btn-primary">등록</button>
 	        	</form>
         	</div>
     	 </div>
 
-		 <!-- 회원가입 실패 이벤트 처리 -->
     	 <script th:inline="javascript">
-			$(document).ready(function(){ //html 문서가 만들어질때 호출되는 함수
+    	 	//$(document).ready(): html 문서가 생성될 때 이벤트를 처리하는 이벤트 핸들러
+			$(document).ready(function(){
 			  var msg = [[${msg}]] //실패메시지 저장
 			  if(msg != null){
 				  alert(msg); //실패메시지 팝업

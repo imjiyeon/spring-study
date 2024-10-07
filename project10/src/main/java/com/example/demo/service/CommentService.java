@@ -9,17 +9,11 @@ import java.util.List;
 
 public interface CommentService {
 
-	int register(CommentDTO dto);
-
-//	List<CommentDTO> getList();
-	
 	List<CommentDTO> getListByBoardNo(int boardNo);
 
-//	CommentDTO read(int no);
+	int register(CommentDTO dto);
 
-//	void modify(CommentDTO dto);
-
-	void remove(int no);
+	boolean remove(int no);
 
 	default Comment dtoToEntity(CommentDTO dto) {
 
