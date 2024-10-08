@@ -99,7 +99,11 @@
                              // 댓글 삭제 버튼 생성
                              let deleteBtn = document.createElement('a');
                              // 클릭 이벤트 설정
-                             deleteBtn.href = 'javascript:removeComment(' + comment.commentNo + ')';
+                             deleteLink.href = '#';
+                             deleteLink.addEventListener('click', function(event) {
+                                event.preventDefault(); // 링크 이동을 방지
+                                removeComment(comment.commentNo);
+                             });
                              deleteBtn.textContent = '삭제';
 
                              // 줄바꿈 태그 생성
