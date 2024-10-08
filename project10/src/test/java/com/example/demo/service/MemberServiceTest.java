@@ -20,6 +20,7 @@ public class MemberServiceTest {
 				.id("user1")
 				.password("1234")
 				.name("둘리")
+				.role("ROLE_USER")
 				.build();
 		boolean isSuccess = service.register(dto);
 		if(isSuccess) {
@@ -29,19 +30,4 @@ public class MemberServiceTest {
 		}
 	}
 
-	@Test
-	public void 회원목록조회() {
-		Page<MemberDTO> page = service.getList(1);
-		List<MemberDTO> list = page.getContent();
-		for(MemberDTO dto : list) {
-			System.out.println(dto);
-		}
-	}
-
-	@Test
-	public void 회원단건조회() {
-		MemberDTO dto = service.read("user1");
-		System.out.println(dto);
-	}
-	
 }

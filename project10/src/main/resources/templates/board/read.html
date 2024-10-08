@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
 
@@ -26,6 +25,7 @@
         </div>
         <div class="form-group">
             <label >등록일</label>
+            <!-- 날짜 패턴 지정 -->
             <input type="text" class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
         </div>
         <div class="form-group">
@@ -33,19 +33,18 @@
             <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
         </div>
 
-        <!-- 댓글 추가 -->
+        <!-- 댓글 -->
         <div class="card shadow mb-4" style="margin-top:10px">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">댓글보기</h6>
             </div>
-
             <div class="card-body" id="commentdiv">
-
             </div>
-
             <div class="card-body">
-                <textarea class="form-control" id="commentContent" rows="3"></textarea>
-                <button type="button" class="btn btn-secondary" onclick="registerComment()">댓글등록</button> <!-- 주소 수정 -->
+                <textarea class="form-control" id="commentContent" rows="3">
+                </textarea>
+                <!-- 버튼에 클릭 이벤트 함수 설정 -->
+                <button type="button" class="btn btn-secondary" onclick="registerComment()">댓글등록</button>
             </div>
         </div>
         <!-- 댓글 끝 -->
@@ -61,29 +60,56 @@
         <!-- 댓글 이벤트 처리 -->
         <script th:inline="javascript">
 
-        	$(document).ready(function() {
-        		showComment();
-        	})
+            // 일관된 방식으로 작성하는 것이 좋지만,
+            // 책에서 쓰는 AJAX를 소개하기 위해 호출 부분만 jQuery를 사용하고
+            // 나머지는 바닐라 자바스크립트를 사용하겠습니다
+
+            // 페이지 로드 시 showComment 함수를 호출하여 댓글 목록을 출력
+            document.addEventListener("DOMContentLoaded", () => {
+                showComment();
+            });
 
         	function showComment(){
         		 var board = [[${dto}]];
-        		 let comment_div = $('#commentdiv');
+        		 let comment_div = document.getElementById('commentdiv');
 
      		     $.ajax({
      		      type: "GET",
      		      url: "/comment/list?boardNo="+board.no,
      		      success: function(response){
      		    	  if(response){
-     		    		  comment_div.empty(); //자식 엘리먼트 모두 지우기
+     		    		  comment_div.innerHTML = ''; //자식 요소 모두 지우기
      		    		  commentlist = response;
      		    		  for(i in commentlist){
+     		    			 // 댓글 하나 꺼내기
      		    			 let comment = commentlist[i];
-     		    			 let writer_span = '<span class="fw-bold strong mar">'+comment.writer+'</span>';
-     		    			 let content_span = '<span class="mar"> '+comment.content+' </span>';
-     		    			 let href = '/comment/remove?commentNo='+comment.commentNo;
-     		    			 let delete_btn = '<a href="javascript:removeComment('+comment.commentNo+')">삭제</a>';
-     		    			 let comment_html = writer_span + content_span + delete_btn + '</br>';
-     		    			 comment_div.append(comment_html);
+     		    			 // 작성자 span 태그 생성
+                             let writerSpan = document.createElement('span');
+                             // 스타일을 위한 클래스 설정
+                             writerSpan.className = 'fw-bold strong mar';
+                             // 댓글 작성자 출력
+                             writerSpan.textContent = comment.writer;
+
+                             // 내용 span 태그 생성
+                             let contentSpan = document.createElement('span');
+                             contentSpan.className = 'mar';
+                             // 댓글 내용 출력
+                             contentSpan.textContent = ' ' + comment.content;
+
+                             // 댓글 삭제 버튼 생성
+                             let deleteBtn = document.createElement('a');
+                             // 클릭 이벤트 설정
+                             deleteBtn.href = 'javascript:removeComment(' + comment.commentNo + ')';
+                             deleteBtn.textContent = '삭제';
+
+                             // 줄바꿈 태그 생성
+                             let lineBreak = document.createElement('br');
+
+                             // div에 작성자, 내용, 삭제 버튼, 줄바꿈 추가
+                             comment_div.appendChild(writerSpan);
+                             comment_div.appendChild(contentSpan);
+                             comment_div.appendChild(deleteBtn);
+                             comment_div.appendChild(lineBreak);
      		    		  }
      		    	  }
      		        }
@@ -95,7 +121,6 @@
         		let commentContent = document.getElementById("commentContent");
         		let commentDto =
         		{
-        				'commentNo':0,
         				'boardNo': board.no,
         				'content': commentContent.value
         		}
@@ -104,7 +129,7 @@
         		      url: "/comment/register",
         		      data: commentDto,
         		      success: function(response){
-        		    	  if(response.success){
+        		    	  if(response){
         		    		  commentContent.value = null;
         		    		  showComment();
         		    	  }
@@ -113,12 +138,12 @@
 	    	}
 
         	function removeComment(commentNo){
-        		var board = [[${dto}]];
+
         		 $.ajax({
-        		      type: "GET",
+        		      type: "DELETE",
         		      url: "/comment/remove?commentNo="+commentNo,
         		      success: function(response){
-        		    	  if(response.success){
+        		    	  if(response){
         		    		  showComment();
         		    	  }
         		        }

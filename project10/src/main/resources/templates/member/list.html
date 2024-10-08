@@ -14,9 +14,16 @@
 					<th>등록일</th>
 				</tr>
 			</thead>
+			
+			<!-- 테이블 처리 -->
 			<tbody>
 
+				<!--[[${list}]]-->
+
 				<tr th:each="dto : ${list}">
+
+					<!--[[${dto}]]-->
+
 					<th>
 						<a th:href="@{/member/read(id = ${dto.id}, page= ${list.number + 1})}">
 							[[${dto.id}]]

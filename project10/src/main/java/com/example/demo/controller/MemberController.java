@@ -26,7 +26,7 @@ public class MemberController {
 		Page<MemberDTO> list = service.getList(page);
 		model.addAttribute("list", list);	
 	}
-
+	
 	@GetMapping("/register")
 	public String register() { // 리턴타입 수정
 		return "member/register"; //html 경로 직접 작성
