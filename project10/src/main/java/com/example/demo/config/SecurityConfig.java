@@ -25,10 +25,13 @@ public class SecurityConfig {
               .requestMatchers("/comment/*").hasAnyRole("ADMIN", "USER")
               .requestMatchers("/member/*").hasRole("ADMIN"); //회원 관리는 관리자이면 접근 가능
 
-
-//        http.formLogin(withDefaults()); //시큐리티가 제공하는 기본 로그인페이지 사용하기
-        http.csrf(csrf -> csrf.disable()); //csrf는 get을 제외하여 상태값을 위조(변경)할 수있는 post,put,delete 메소드를 막음
-//        http.logout(withDefaults()); // 로그아웃 처리
+        
+        // 인증이 필요하면 로그인 페이지를 보여주도록 설정 (시큐리티가 제공하는 기본 로그인페이지)
+//        http.formLogin(); 
+        //csrf 기능을 비활성화. 이제 CSRF 토큰이 발급 안됨
+        http.csrf(csrf -> csrf.disable());
+        // 로그아웃 처리
+//        http.logout(); 
 
         //커스텀 로그인 페이지와 처리 주소 설정 
         http.formLogin( form -> 
@@ -39,6 +42,21 @@ public class SecurityConfig {
                                 response.sendRedirect("/"); // 로그인 성공 시 리다이렉트
                             })
                       );
+        
+// 스프링 버전이 다를 경우
+//        //커스텀 로그인 페이지 설정
+//        http.formLogin()
+//                .loginPage("/customlogin") // 로그인 화면 주소
+//                .loginProcessingUrl("/login") // 로그인 처리 주소
+//                .successHandler(
+//                        new AuthenticationSuccessHandler() {
+//							@Override
+//							public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+//								response.sendRedirect("/");
+//							}
+//                        }
+//                )
+//                .permitAll(); // 접근 권한
 
         return http.build();
     }
