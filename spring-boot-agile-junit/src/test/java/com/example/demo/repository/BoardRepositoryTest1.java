@@ -1,4 +1,4 @@
-package com.example.demo.junit4;
+package com.example.demo.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +12,7 @@ import com.example.demo.repository.BoardRepository;
 
 
 @SpringBootTest
-public class BoardRepositoryTest {
+public class BoardRepositoryTest1 {
 
 	@Autowired
 	BoardRepository repository;
