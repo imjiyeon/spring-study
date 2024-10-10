@@ -1,6 +1,6 @@
 package com.example.demo.order.entity;
 
-import com.example.demo.common.BaseEntity;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,15 +23,17 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Order extends BaseEntity {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int no; //제품번호
+    int no; //주문번호
 
     @Column(length = 50)
     String productName; //제품명
 
     int price; //가격
+    
+    LocalDate orderDate; //주문일자
 
 }

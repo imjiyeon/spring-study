@@ -2,8 +2,6 @@ package com.example.demo.stats.entity;
 
 import java.time.LocalDate;
 
-import com.example.demo.common.BaseEntity;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -22,12 +20,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Stats extends BaseEntity {
+public class Stats {
 
     @Id
     LocalDate orderDt; //주문일
 
-    int count; //주문 건수
+    long count; //주문 건수
     
     int totalPrice; //주문 총금액
 
