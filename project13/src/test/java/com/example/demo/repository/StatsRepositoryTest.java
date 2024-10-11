@@ -33,6 +33,8 @@ public class StatsRepositoryTest {
 		// 주문 목록 조회
 		List<Order> list = orderRepository.findAll();
 
+//		List<Order> list = orderRepository.findByOrderDate(now);
+
 		//
 		List<Order> filterList = list.stream().filter(entity -> {
 			LocalDate orderDt = entity.getOrderDate();

@@ -66,19 +66,22 @@ public class OrderRepositoryTest {
 		// 어제 날짜 구하기
 		LocalDate yesterday = now.minusDays(1);
 		
-		// 주문 목록 조회
-		List<Order> list = repository.findAll();
-		
+//		// 주문 목록 조회
+//		List<Order> list = repository.findAll();
+//
+//		// 전날 들어온 주문이력을 찾아서 삭제
+//		list.stream().forEach(entity -> {
+//			int no = entity.getNo();
+//			LocalDate orderDate = entity.getOrderDate();
+//
+//			if (orderDate.equals(yesterday)) {
+//				repository.deleteById(no);
+//				System.out.println(no + " remove..");
+//			}
+//		});
+
 		// 전날 들어온 주문이력을 찾아서 삭제
-		list.stream().forEach(entity -> {
-			int no = entity.getNo();
-			LocalDate orderDate = entity.getOrderDate();
-			
-			if (orderDate.equals(yesterday)) {
-				repository.deleteById(no);
-				System.out.println(no + " remove..");
-			}
-		});
+		repository.removeByOrderDate(yesterday);
 		
 	}
 	
