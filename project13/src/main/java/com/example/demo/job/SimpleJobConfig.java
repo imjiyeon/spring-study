@@ -11,6 +11,7 @@ import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.scope.context.StepContext;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.core.step.tasklet.TaskletStep;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +52,11 @@ public class SimpleJobConfig {
 	// STEP
 	@Bean
 	public Step step1() {
-		return new StepBuilder("step1..", jobRepository)
+
+		TaskletStep a = new StepBuilder("step1..", jobRepository)
 				.tasklet(testTasklet(), manager).build();
+
+		return a;
 	}
 
 	// STEP
