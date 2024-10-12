@@ -1,0 +1,12 @@
+-- 테이블 삭제
+DROP TABLE batch_job_execution_context;
+DROP TABLE batch_job_execution_params;
+DROP TABLE batch_step_execution_context;
+DROP TABLE batch_step_execution;
+DROP TABLE batch_job_execution;
+DROP TABLE batch_job_instance;
+
+-- 시퀀스 삭제
+DROP SEQUENCE batch_job_execution_seq;
+DROP SEQUENCE batch_job_seq;
+DROP SEQUENCE batch_step_execution_seq;
