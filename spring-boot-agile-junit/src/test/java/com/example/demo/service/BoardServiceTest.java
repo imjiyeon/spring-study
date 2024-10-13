@@ -15,11 +15,7 @@ public class BoardServiceTest {
 
 	@Autowired
 	BoardService service;
-	
-	// AssertJ 라이브러리의 assertThat를 사용하여 테스트를 진행한다.
-	// 테스트 시나리오가 의도한 대로 동작하는지 확인한다
-	// 예상 결과와 일치하면 단위 테스트가 성공하고, 그렇지 않으면 실패한다
-	
+
 	// 준비: board 테이블을 삭제하고 다시생성해주세요!
 
 	@Test
