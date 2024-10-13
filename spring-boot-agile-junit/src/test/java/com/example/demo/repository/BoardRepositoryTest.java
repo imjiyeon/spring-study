@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.demo.entity.Board;
-import com.example.demo.repository.BoardRepository;
 
+// 기존 방식으로 테스트
 
 @SpringBootTest
-public class BoardRepositoryTest1 {
+public class BoardRepositoryTest {
 
 	@Autowired
 	BoardRepository repository;
