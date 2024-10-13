@@ -78,12 +78,6 @@ public class BoardServiceImpl implements BoardService {
 		// 기본동작만 수행하는 최소한의 코드를 작성
 		repository.deleteById(no);
 
-		// 코드 리팩토링: 기존 게시물이 존재하는지 확인하고 삭제
-//		Optional<Board> result = repository.findById(no);
-//		if (result.isPresent()) {
-//			repository.deleteById(no);
-//		}
-
 	}
 
 }
