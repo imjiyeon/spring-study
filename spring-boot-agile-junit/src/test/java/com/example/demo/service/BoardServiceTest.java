@@ -33,6 +33,10 @@ public class BoardServiceTest {
 		
 		// Then: 새로 생성된 게시물의 번호가 1번이 맞는지 확인
 		assertThat(no).isEqualTo(1);
+		
+		// 번호를 바꿔서 다시 테스트
+		// 예상결과가 맞지 않으면 테스트 실패
+//		assertThat(no).isEqualTo(3);
 	}
 	
 	@Test
