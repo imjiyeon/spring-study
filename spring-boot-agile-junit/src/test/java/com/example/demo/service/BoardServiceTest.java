@@ -16,8 +16,6 @@ public class BoardServiceTest {
 	@Autowired
 	BoardService service;
 
-	// 준비: board 테이블을 삭제하고 다시생성해주세요!
-
 	@Test
 	void 게시물등록() {
 		
