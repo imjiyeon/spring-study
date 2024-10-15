@@ -32,11 +32,12 @@
             <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
         </div>
 
+
         <!-- 이미지가 있으면 출력 -->
         <th:block th:if="${dto.imgPath!=null}">
             <div class="form-group">
-                <img th:src="${dto.imgPath}">
-                [[${dto.imgPath}]]
+                <img th:src="'/uploadfile/' + ${dto.imgPath}">
+                /uploadfile/ + [[${dto.imgPath}]]
             </div>
         </th:block>
 
