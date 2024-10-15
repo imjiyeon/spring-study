@@ -36,8 +36,10 @@
         <!-- 이미지가 있으면 출력 -->
         <th:block th:if="${dto.imgPath!=null}">
             <div class="form-group">
+            	<!-- 상대경로 -->
                 <img th:src="'/uploadfile/' + ${dto.imgPath}">
-                /uploadfile/ + [[${dto.imgPath}]]
+                <!-- 절대경로 -->
+                <!-- <img src="file:/C:\\uploadfile\\bird-7852081_1280.jpg"> -->
             </div>
         </th:block>
 
