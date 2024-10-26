@@ -33,5 +33,9 @@ public class Board extends BaseEntity {
 
     @Column(length = 50, nullable = false)
     String writer;
+    
+	/* 필드 추가 */
+    @Column(length = 200, nullable = true)
+	String imgPath; //첨부파일 이름
 
 }

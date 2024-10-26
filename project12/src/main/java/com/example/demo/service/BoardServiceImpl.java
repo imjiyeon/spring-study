@@ -10,16 +10,25 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.entity.Board;
 import com.example.demo.repository.BoardRepository;
+import com.example.demo.util.FileUtil;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	BoardRepository repository;
+	
+	@Autowired
+	FileUtil fileUtil;
 
 	@Override
 	public int register(BoardDTO dto) {
 		Board entity = dtoToEntity(dto);
+		
+		// 추가
+		String imgPath = fileUtil.fileUpload(dto.getUploadFile());
+		entity.setImgPath(imgPath);
+		
 		repository.save(entity);
 
 		return entity.getNo();
