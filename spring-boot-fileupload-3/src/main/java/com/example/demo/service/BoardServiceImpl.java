@@ -1,17 +1,17 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.BoardDTO;
-import com.example.demo.entity.Board;
-import com.example.demo.repository.BoardRepository;
-import com.example.demo.util.FileUtil;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.dto.BoardDTO;
+import com.example.demo.entity.Board;
+import com.example.demo.repository.BoardRepository;
+import com.example.demo.util.FileUtil;
 
 @Service // 서비스 클래스로 지정
 public class BoardServiceImpl implements BoardService {

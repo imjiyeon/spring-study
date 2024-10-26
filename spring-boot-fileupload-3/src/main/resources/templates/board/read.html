@@ -32,11 +32,14 @@
             <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
         </div>
 
+
         <!-- 이미지가 있으면 출력 -->
         <th:block th:if="${dto.imgPath!=null}">
             <div class="form-group">
-                <img th:src="${dto.imgPath}">
-                [[${dto.imgPath}]]
+            	<!-- 상대경로 -->
+                <img th:src="'/uploadfile/' + ${dto.imgPath}">
+                <!-- 절대경로 -->
+                <!-- <img src="file:/C:\\uploadfile\\bird-7852081_1280.jpg"> -->
             </div>
         </th:block>
 

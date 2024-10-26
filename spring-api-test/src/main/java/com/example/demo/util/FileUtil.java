@@ -22,7 +22,7 @@ public class FileUtil {
 	public String fileUpload(MultipartFile multipartFile) {
 		Path copyOfLocation = null;
 		
-		if(multipartFile.isEmpty()) { //파일스트림이 없으면 메소드를 종료
+		if(multipartFile == null || multipartFile.isEmpty()) { //파일스트림이 없으면 메소드를 종료
 			return null;
 		}
 		try {

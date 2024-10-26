@@ -68,16 +68,16 @@ public class SecurityConfig {
 		
 		// 1.인증 필터 등록: /member 또는 /board 요청이 들어오면 사용자 인증 실행
 //		String[] arr = {};
-		String[] arr = {"/board/*", "/member/*"};
+		String[] arr = {"/board/*", "/member/*", "/sample/*"};
 		http.addFilterBefore(new ApiCheckFilter(arr, jwtUtil(), customUserDetailsService()), UsernamePasswordAuthenticationFilter.class);
 		
 		// 2.권한 설정: 회원등록-아무나, 게시물-user, 회원-admin
 		http
          .authorizeHttpRequests()
          .requestMatchers("/register", "/login").permitAll()
-//         .requestMatchers("/board/*", "/member").permitAll()
-         .requestMatchers("/board/*").hasAnyRole("USER","ADMIN")
-         .requestMatchers("/member/*").hasRole("ADMIN")
+         .requestMatchers("/board/*", "/member/*", "/sample/*").permitAll()
+//         .requestMatchers("/board/*").hasAnyRole("USER","ADMIN")
+//         .requestMatchers("/member/*").hasRole("ADMIN")
          .anyRequest().authenticated()
          
          .and()
