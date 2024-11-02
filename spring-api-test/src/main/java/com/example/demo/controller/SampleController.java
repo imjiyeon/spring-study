@@ -11,22 +11,22 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.util.S3FileUtil;
+import com.example.demo.util.FileUtil;
 
 @RestController
 @RequestMapping("/sample")
 public class SampleController {
 
-//	@Autowired
-//	FileUtil fileUtil;
-	
 	@Autowired
-	S3FileUtil s3FileUtil;
+	FileUtil fileUtil;
+	
+//	@Autowired
+//	S3FileUtil s3FileUtil;
 
 	@PostMapping("/file")
 	public ResponseEntity<String> register(@RequestPart("uploadFile") MultipartFile uploadFile) {
 		
-		String imgPath = s3FileUtil.fileUpload(uploadFile);
+		String imgPath = fileUtil.fileUpload(uploadFile);
 		
 		return new ResponseEntity<>(imgPath, HttpStatus.CREATED);
 	}
