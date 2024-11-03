@@ -54,7 +54,7 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 		ObjectMapper objectMapper = new ObjectMapper();
 		HashMap<String, String> map = objectMapper.readValue(body, HashMap.class);
 		
-		String id = map.get("username");
+		String id = map.get("id");
 		String pw = map.get("password");
 
 		if (id == null) {
