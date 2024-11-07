@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,11 +19,14 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import com.example.demo.security.filter.ApiCheckFilter;
 import com.example.demo.security.filter.ApiLoginFilter;
 import com.example.demo.security.service.UserDetailsServiceImpl;
 import com.example.demo.security.util.JWTUtil;
+import com.example.demo.service.MemberService;
+import com.example.demo.service.MemberServiceImpl;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -52,26 +56,38 @@ public class SecurityConfig {
 	public JWTUtil jwtUtil() {
 		return new JWTUtil();
 	}
+	
+	// 사용자 관리 서비스
+	@Bean
+	public MemberService memberService() {
+		return new MemberServiceImpl();
+	}
 
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		
 		// 1.인증 필터 등록: /member 또는 /board 요청이 들어오면 사용자 인증 실행
-		String[] arr = {"/member/*", "/board/*"};
+//		String[] arr = {};
+		String[] arr = {"/board/*", "/member/*", "/sample/*"};
 		http.addFilterBefore(new ApiCheckFilter(arr, jwtUtil(), customUserDetailsService()), UsernamePasswordAuthenticationFilter.class);
 		
 		// 2.권한 설정: 회원등록-아무나, 게시물-user, 회원-admin
 		http
          .authorizeHttpRequests()
-         .requestMatchers("/register", "/api/login").permitAll()
-         .requestMatchers("/board/*").hasRole("USER")
-         .requestMatchers("/member/*").hasRole("ADMIN")
+         .requestMatchers("/register", "/login").permitAll()
+         .requestMatchers("/board/*", "/member/*", "/sample/*").permitAll()
+//         .requestMatchers("/board/*").hasAnyRole("USER","ADMIN")
+//         .requestMatchers("/member/*").hasRole("ADMIN")
          .anyRequest().authenticated()
          
          .and()
          .csrf().disable() //csrf 비활성화
          //토큰을 사용하니까 세션은 사용안함
-         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+         .and()
+         .logout()
+         .logoutUrl("/logout")
+         .logoutSuccessHandler(logoutSuccessHandler());
 
         // 3.로그인 필터 등록: 로그인 요청이 들어오면 토큰 발급
 
@@ -85,7 +101,7 @@ public class SecurityConfig {
  		http.authenticationManager(authenticationManager);
  		
  		// 로그인 필터 생성: /api/login 요청이 들어오면 필터 실행
-		ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login", jwtUtil());
+		ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/login", jwtUtil(), memberService());
 		apiLoginFilter.setAuthenticationManager(authenticationManager);
 
 		// Username~Filter: 사용자 이름과 비밀번호를 사용하는 시큐리티의 기본 필터
@@ -138,5 +154,34 @@ public class SecurityConfig {
 		};
 		return handler;
 	}
+	
+	@Bean
+	public LogoutSuccessHandler logoutSuccessHandler() {
+		
+		LogoutSuccessHandler handler = new LogoutSuccessHandler() {
+
+			@Override
+			public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
+					Authentication authentication) throws IOException, ServletException {
+				
+				  String token = request.getHeader("Authorization");
+			        if (token != null) {
+			            jwtUtil().invalidateToken(token);
+				        response.setStatus(HttpServletResponse.SC_OK);
+				        response.setContentType("text/html; charset=UTF-8");
+				        response.getWriter().write("로그아웃에 성공했습니다. 더이상 해당 토큰을 사용할 수 없습니다.");
+			        } else {
+				        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				        response.setContentType("text/html; charset=UTF-8");
+				        response.getWriter().write("헤더에 토큰이 없어 로그아웃에 실패했습니다");
+			        }
+
+			}		
+		};
+		
+		return handler;
+	}
+	
+	
 
 }

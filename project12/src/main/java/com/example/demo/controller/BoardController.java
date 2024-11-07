@@ -24,8 +24,10 @@ public class BoardController {
 	@Autowired
     BoardService service;
 
+	// 게시물 데이터를 폼데이터로 받기 위해 @RequestBody 삭제
 	@PostMapping("/register")
 	public ResponseEntity<Integer> register(@RequestBody BoardDTO dto) {
+//	public ResponseEntity<Integer> register(BoardDTO dto) {
 		int no = service.register(dto);
 		return new ResponseEntity<>(no, HttpStatus.CREATED); //201성공코드와 새로운 글번호를 반환한다
 	}

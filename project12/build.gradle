@@ -35,13 +35,16 @@ dependencies {
 	// 단위테스트 에러 해결
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	
-	//시큐리티 라이브러리 추가
+	// 시큐리티 라이브러리 추가
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	
-	//json 라이브러리 추가
+	// json 라이브러리 추가
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'javax.xml.bind:jaxb-api:2.3.0'	
     implementation 'net.minidev:json-smart:2.4.7'
+    
+    // AWS S3 라이브러리 추가
+	// implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.6.RELEASE'
 	
 }
 
