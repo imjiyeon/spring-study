@@ -38,6 +38,9 @@ import jakarta.servlet.http.HttpServletResponse;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	
+	// JWT 토큰 기반 로그인에서도 처음 로그인할 때는 인증 서비스가 필요하고, 
+	// 이후 요청부터는 필터를 통해 인증이 이루어진다
 
 	// 인증서비스
 	@Bean
