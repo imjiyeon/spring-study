@@ -29,6 +29,8 @@ public class BoardController {
 	@PostMapping("/register")
 	public ResponseEntity<Integer> register(@RequestBody BoardDTO dto) {
 //	public ResponseEntity<Integer> register(BoardDTO dto) {
+		// 임시 작성자
+		dto.setWriter("user");
 		int no = service.register(dto);
 		return new ResponseEntity<>(no, HttpStatus.CREATED); //201성공코드와 새로운 글번호를 반환한다
 	}

@@ -26,8 +26,8 @@ public class BoardServiceImpl implements BoardService {
 		Board entity = dtoToEntity(dto);
 		
 		// 추가
-		String imgPath = fileUtil.fileUpload(dto.getUploadFile());
-		entity.setImgPath(imgPath);
+//		String imgPath = fileUtil.fileUpload(dto.getUploadFile());
+//		entity.setImgPath(imgPath);
 		
 		repository.save(entity);
 

@@ -35,6 +35,8 @@ public interface BoardService {
 				.writer(entity.getWriter())
 				.regDate(entity.getRegDate())
 				.modDate(entity.getModDate())
+				// 추가
+//				.imgPath(entity.getImgPath())
 				.build();
 		return dto;
 	}
