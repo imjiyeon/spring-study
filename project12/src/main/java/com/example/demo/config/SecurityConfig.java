@@ -2,6 +2,8 @@ package com.example.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -11,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.example.demo.security.ApiLoginFilter;
 import com.example.demo.security.ApliCheckFilter;
 import com.example.demo.security.UserDetailsServiceImpl;
 
@@ -51,6 +54,20 @@ public class SecurityConfig {
 		// apiLoginFilter가 Username~Filter보다 먼저 실행되도록 설정
 		http.addFilterBefore(apliCheckFilter(), 
 							UsernamePasswordAuthenticationFilter.class);
+		
+		// 인증매니저 생성
+ 		AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);	
+ 		authenticationManagerBuilder.userDetailsService(customUserDetailsService())
+					 				.passwordEncoder(passwordEncoder());	
+ 		AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+
+ 		// 인증매니저 등록
+ 		http.authenticationManager(authenticationManager);
+ 		
+ 		// ApiLoginFilter 생성 및 등록
+ 		// /login 요청이 들어오면 필터가 실행됨
+		ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/login");
+		apiLoginFilter.setAuthenticationManager(authenticationManager);
 
 		return http.build();
 	}

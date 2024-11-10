@@ -17,7 +17,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
-	protected ApiLoginFilter(String defaultFilterProcessesUrl) {
+	// 나중에 접근제어자 변경
+//	protected ApiLoginFilter(String defaultFilterProcessesUrl) {
+	public ApiLoginFilter(String defaultFilterProcessesUrl) {
 		super(defaultFilterProcessesUrl);
 	}
 
@@ -25,13 +27,10 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
 
-		// 요청 메세지에서 바디데이터 가져오기
 		String body = getBody(request);
 		ObjectMapper objectMapper = new ObjectMapper();
-		// json문자열 -> Map객체로 변환
 		HashMap<String, String> map = objectMapper.readValue(body, HashMap.class);
 
-		// 바디데이터에서 아이디와 패스워드 가져오기
 		String id = map.get("id");
 		String password = map.get("password");
 
