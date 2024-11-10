@@ -17,10 +17,10 @@ public class MemberServiceTest {
 	@Test
 	public void 회원등록() {
 		MemberDTO dto = MemberDTO.builder()
-				.id("user1")
+				.id("user")
 				.password("1234")
 				.name("둘리")
-				.role("ROLE_ADMIN")
+				.role("ROLE_USER")
 				.build();
 		boolean isSuccess = service.register(dto);
 		if(isSuccess) {
