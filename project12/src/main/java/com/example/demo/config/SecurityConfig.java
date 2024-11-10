@@ -29,11 +29,6 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		
-      http.formLogin();
-      http.csrf().disable();
-      http.logout();
-      http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
       
       // CSRF 비활성화
       http.csrf().disable(); 
