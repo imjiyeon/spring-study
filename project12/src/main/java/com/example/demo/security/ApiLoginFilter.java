@@ -2,27 +2,42 @@ package com.example.demo.security;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
+import com.example.demo.dto.MemberDTO;
+import com.example.demo.service.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
+	JWTUtil jwtUtil;
+	
+	MemberService memberService;
+
 	// 나중에 접근제어자 변경
 //	protected ApiLoginFilter(String defaultFilterProcessesUrl) {
-	public ApiLoginFilter(String defaultFilterProcessesUrl) {
+	public ApiLoginFilter(String defaultFilterProcessesUrl, MemberService memberService) {
 		super(defaultFilterProcessesUrl);
+		this.jwtUtil = new JWTUtil();
+		this.memberService = memberService;
 	}
 
+	// 로그인 요청이 들어오면 아이디와 패스워드를 확인하는 메소드
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
@@ -38,7 +53,11 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 			throw new BadCredentialsException("id cannot be null");
 		}
 
-		return null;
+		// 토큰 생성
+		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(id, password);
+
+		// 인증매니저에 토큰을 전달하여 인증을 수행
+		return getAuthenticationManager().authenticate(authToken);
 	}
 
 	// 요청 메세지에서 바디 데이터를 꺼내는 메소드
@@ -66,6 +85,47 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 		}
 
 		return stringBuilder.toString();
+	}
+
+	@Override
+	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+			Authentication authResult) throws IOException, ServletException {
+
+		System.out.println("---------ApiLoginFilter---------");
+		System.out.println("인증결과: " + authResult);
+		System.out.println("인증객체: " + authResult.getPrincipal());
+
+		String id = authResult.getName();
+		System.out.println("아이디: " + id);
+
+		String token = null;
+		try {
+			// 토큰 생성
+			token = jwtUtil.generateToken(id);
+			System.out.println(token);
+
+			// 사용자 정보 조회
+			MemberDTO member = memberService.read(id);
+
+			// 결과 데이터 만들기 (토큰과 사용자정보)
+			HashMap<String, Object> data = new HashMap<>();
+			data.put("token", token);
+			data.put("user", member);
+
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+
+			// 객체 -> json문자열 변환
+			ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule())
+					.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+					.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+
+			PrintWriter out = response.getWriter();
+			out.print(objectMapper.writeValueAsString(data));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

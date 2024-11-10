@@ -1,4 +1,4 @@
-package com.example.demo.config1;
+package com.example.demo.config;
 
 import java.io.File;
 
