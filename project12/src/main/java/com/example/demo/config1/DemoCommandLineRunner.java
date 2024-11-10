@@ -18,7 +18,7 @@ public class DemoCommandLineRunner implements CommandLineRunner  {
 		File file = new File(filepath);
 		
 		if(file.exists()) {
-			System.out.println(file + " 폴더가 존재합니다.");
+//			System.out.println(file + " 폴더가 존재합니다.");
 		} else {
 			file.mkdir();
 			System.out.println(file + " 폴더가 생성되었습니다.");
