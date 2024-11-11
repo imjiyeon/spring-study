@@ -76,13 +76,16 @@ public class SecurityConfig {
 		http.addFilterBefore(apliCheckFilter(), 
 							UsernamePasswordAuthenticationFilter.class);
 		
-		// 인증매니저 생성
+		/* API 로그인 필터에 필요한 인증 매니저 생성 */
+		// 인증매니저 설정
  		AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);	
  		authenticationManagerBuilder.userDetailsService(customUserDetailsService())
 					 				.passwordEncoder(passwordEncoder());	
+ 		
+ 		// 인증매니저 생성
  		AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
- 		// 인증매니저 등록
+ 		// 시큐리티에 인증매니저 등록
  		http.authenticationManager(authenticationManager);
  		
  		// ApiLoginFilter 생성 및 등록

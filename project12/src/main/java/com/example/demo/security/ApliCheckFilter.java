@@ -82,7 +82,10 @@ public class ApliCheckFilter extends OncePerRequestFilter {
 					filterChain.doFilter(request, response);
 					return;
 				} else {
-					// 토큰이 유효하지 않으면 403 에러메세지를 만들어서 반환하고 필터체인 종료
+					// 헤더가 없으면 데이터가 없고, 200코드 정상코드가 반환된다
+					// 정상적으로 처리하기 위해 403 메세지를 만들어서 반환한다
+					
+					// 토큰이 유효하지 않으면 403 에러메세지가 전송되고 필터체인이 종료됨
 					response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 					response.setContentType("application/json;charset=utf-8");
 					JSONObject json = new JSONObject();
