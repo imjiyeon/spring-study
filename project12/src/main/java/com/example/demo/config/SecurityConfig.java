@@ -91,9 +91,10 @@ public class SecurityConfig {
 		// 나중에 추가
 		apiLoginFilter.setAuthenticationFailureHandler(authenticationFailureHandler());	
 		apiLoginFilter.setAuthenticationManager(authenticationManager);
-		
-		// apiLoginFilter가 UsernamePasswordFilter보다 먼저 실행되도록 설정
-		http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
+
+		// UsernamePasswordFilter는 폼로그인에서 사용하는 필터이다
+		// apiLoginFilter가 UsernamePasswordFilter보다 먼저 실행되도록 설정한다
+		 http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}
