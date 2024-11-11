@@ -18,19 +18,22 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import net.minidev.json.JSONObject;
 
-// 요청이 들어오면 토큰이 유효한지 확인하는 필터
+
+// 요청이 들어오면 JWT 토큰이 유효한지 확인하는 필터
 
 // OncePerRequestFilter 상속받고 doFilterInternal 메소드 구현
 public class ApliCheckFilter extends OncePerRequestFilter {
 
-	// 검사가 필요한 URL 목록
-	String[] patternArr = { "/board/*", "/member*" };
+	// 토큰 검사가 필요한 URL 패턴 목록
+	String[] patternArr = { "/board/*", "/member/*" };
 
-	//
+	// 패턴 검사기
 	AntPathMatcher antPathMatcher;
 	
+	// JWT 유틸 (토큰 생성 및 검사)
 	JWTUtil jwtUtil;
 	
+	// 사용자 인증 서비스
 	UserDetailsService userDetailsService;
 
 	public ApliCheckFilter(UserDetailsService userDetailsService) {
@@ -44,12 +47,14 @@ public class ApliCheckFilter extends OncePerRequestFilter {
 	// response: 사용자에게 전송할 응답메세지를 담을 객체
 	// filterChain: 인증 과정에서 사용되는 필터체인
 
-	// 토큰이 유효한지 확인하는 메소드
+	// 매 요청마다 호출되어 토큰이 유효한지 확인하는 메소드
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
-		// 해당 경로가 검사가 필요한 API라면 ApliCheckFilter 필터 실행
+		// 요청 URL이 패턴과 일치하는 경우에 토큰 검사
+		// 예시. 현재경로: /board/list 패턴: /board/* 또는 /member/*
+		
 		for (String pattern : patternArr) {
 			boolean result = antPathMatcher.match(pattern, request.getRequestURI());
 			if (result == true) {
@@ -58,6 +63,7 @@ public class ApliCheckFilter extends OncePerRequestFilter {
 				System.out.println("ApliCheckFilter...............");
 				System.out.println("ApliCheckFilter...............");
 
+				// 헤더에서 토큰을 꺼내서 검사
 				boolean checkHeader = checkAuthHeader(request);
 				if (checkHeader) {
 					

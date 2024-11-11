@@ -23,25 +23,31 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+// API 로그인 필터 클래스
+// 로그인 요청이 들어오면 아이디와 패스워드를 검증하여, JWT 토큰을 발급
+
 public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
+	// JWT 유틸
 	JWTUtil jwtUtil;
 	
+	// 사용자 정보를 조회하기 위해 선언
 	MemberService memberService;
 
-	// 나중에 접근제어자 변경
-//	protected ApiLoginFilter(String defaultFilterProcessesUrl) {
+	// 생성자
+	// 로그인 URL 경로와 필요한 서비스 초기화
 	public ApiLoginFilter(String defaultFilterProcessesUrl, MemberService memberService) {
 		super(defaultFilterProcessesUrl);
 		this.jwtUtil = new JWTUtil();
 		this.memberService = memberService;
 	}
 
-	// 로그인 요청이 들어오면 아이디와 패스워드를 확인하는 메소드
+	// 로그인 요청 시 아이디와 패스워드를 확인하는 메소드
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
 
+		// 메세지 바디에서 로그인 데이터 추출
 		String body = getBody(request);
 		ObjectMapper objectMapper = new ObjectMapper();
 		HashMap<String, String> map = objectMapper.readValue(body, HashMap.class);
@@ -53,10 +59,10 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 			throw new BadCredentialsException("id cannot be null");
 		}
 
-		// 토큰 생성
+		// 아이디와 패스워드를 기반으로 토큰 생성
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(id, password);
 
-		// 인증매니저에 토큰을 전달하여 인증을 수행
+		// 인증매니저에 토큰을 전달
 		return getAuthenticationManager().authenticate(authToken);
 	}
 
@@ -87,6 +93,7 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 		return stringBuilder.toString();
 	}
 
+	// 인증을 성공적으로 완료한 후 호출하는 메소드
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
@@ -95,19 +102,20 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 		System.out.println("인증결과: " + authResult);
 		System.out.println("인증객체: " + authResult.getPrincipal());
 
+		// 인증된 사용자의 ID 가져오기
 		String id = authResult.getName();
 		System.out.println("아이디: " + id);
 
 		String token = null;
 		try {
-			// 토큰 생성
+			// JWT 토큰 생성
 			token = jwtUtil.generateToken(id);
 			System.out.println(token);
 
 			// 사용자 정보 조회
 			MemberDTO member = memberService.read(id);
 
-			// 결과 데이터 만들기 (토큰과 사용자정보)
+			// 응답 데이터 생성 (토큰과 사용자정보)
 			HashMap<String, Object> data = new HashMap<>();
 			data.put("token", token);
 			data.put("user", member);
@@ -115,11 +123,12 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 
-			// 객체 -> json문자열 변환
+			// 데이터 객체를 json문자열로 변환
 			ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule())
 					.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
 					.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 
+			// 응답 전송
 			PrintWriter out = response.getWriter();
 			out.print(objectMapper.writeValueAsString(data));
 
