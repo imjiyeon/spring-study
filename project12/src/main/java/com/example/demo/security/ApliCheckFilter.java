@@ -65,6 +65,15 @@ public class ApliCheckFilter extends OncePerRequestFilter {
 
 				// 헤더에서 토큰을 꺼내서 검사
 				boolean checkHeader = checkAuthHeader(request);
+
+//				if(checkHeader){
+//					filterChain.doFilter(request, response);
+//					return;
+//				} else {
+//					// 토큰이 유효하지 않다면 필터체인 종료
+//					return;
+//				}
+				
 				if (checkHeader) {
 					
 					// 유효한 토큰이 있으면 인증객체 생성
