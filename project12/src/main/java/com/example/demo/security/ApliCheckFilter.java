@@ -3,11 +3,7 @@ package com.example.demo.security;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -77,15 +73,15 @@ public class ApliCheckFilter extends OncePerRequestFilter {
 				if (checkHeader) {
 					
 					// 유효한 토큰이 있으면 인증객체 생성
-					String username = getUserId(request);
-					UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-					if (userDetails != null) {
-						UsernamePasswordAuthenticationToken authentication = 
-								new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-						authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-						// 인증 객체를 SecurityContext에 저장하여 이후 필터체인에서 인증 상태 유지
-						SecurityContextHolder.getContext().setAuthentication(authentication);
-					}
+//					String username = getUserId(request);
+//					UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+//					if (userDetails != null) {
+//						UsernamePasswordAuthenticationToken authentication = 
+//								new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+//						authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//						// 인증 객체를 SecurityContext에 저장하여 이후 필터체인에서 인증 상태 유지
+//						SecurityContextHolder.getContext().setAuthentication(authentication);
+//					}
 					
 					// 토큰이 유효하면 필터의 다음 단계로 넘어가기
 					filterChain.doFilter(request, response);

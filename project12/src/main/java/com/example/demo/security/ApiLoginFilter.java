@@ -3,7 +3,6 @@ package com.example.demo.security;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 import org.springframework.security.authentication.BadCredentialsException;
@@ -63,6 +62,7 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(id, password);
 
 		// 인증매니저에 토큰을 전달
+		// JWT와 같은 실제 토큰이 아니라, 인증매니저에게 인증을 시도하는 용도
 		return getAuthenticationManager().authenticate(authToken);
 	}
 
@@ -123,11 +123,13 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 
-			// 데이터 객체를 json문자열로 변환
-			ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule())
-					.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-					.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-
+			// 객체를 JSON문자열로 변환하기 위해 mapper 생성
+			// LocalDateTime 타입은 json으로 변환할 때 오류가 발생할 수 있기 때문에 registerModule 설정 필요
+			// 날짜가 요소별로 분리되어 나오는 기능을 비활성화
+			ObjectMapper objectMapper = new ObjectMapper()
+								.registerModule(new JavaTimeModule())
+								.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+			
 			// 응답 전송
 			PrintWriter out = response.getWriter();
 			out.print(objectMapper.writeValueAsString(data));
