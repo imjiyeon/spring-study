@@ -29,7 +29,7 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 	// JWT 유틸
 	JWTUtil jwtUtil;
-	
+
 	// 사용자 정보를 조회하기 위해 선언
 	MemberService memberService;
 
@@ -126,10 +126,9 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 			// 객체를 JSON문자열로 변환하기 위해 mapper 생성
 			// LocalDateTime 타입은 json으로 변환할 때 오류가 발생할 수 있기 때문에 registerModule 설정 필요
 			// 날짜가 요소별로 분리되어 나오는 기능을 비활성화
-			ObjectMapper objectMapper = new ObjectMapper()
-								.registerModule(new JavaTimeModule())
-								.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-			
+			ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule())
+					.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
 			// 응답 전송
 			PrintWriter out = response.getWriter();
 			out.print(objectMapper.writeValueAsString(data));

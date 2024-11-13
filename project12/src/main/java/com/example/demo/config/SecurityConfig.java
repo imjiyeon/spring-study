@@ -18,8 +18,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.example.demo.security.ApiCheckFilter;
 import com.example.demo.security.ApiLoginFilter;
-import com.example.demo.security.ApliCheckFilter;
 import com.example.demo.security.UserDetailsServiceImpl;
 import com.example.demo.service.MemberService;
 import com.example.demo.service.MemberServiceImpl;
@@ -44,9 +44,10 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 
+	// 필터를 빈으로 등록하면, 자동으로 필터 체인에 추가됨
 	@Bean
-	public ApliCheckFilter apliCheckFilter() {
-		return new ApliCheckFilter(customUserDetailsService());
+	public ApiCheckFilter apiCheckFilter() {
+		return new ApiCheckFilter(customUserDetailsService());
 	}
 
 	@Bean
@@ -54,7 +55,12 @@ public class SecurityConfig {
 		return new MemberServiceImpl();
 	}
 	
-
+	// 웹사이트: 세션 기반 인증 + 폼로그인
+	// => 사용자가 폼에서 아이디와 패스워드를 입력 > 세션아이디 부여 > 쿠키에 저장
+	// => 브라우저가 자동으로 세션아이디를 전송하므로 사용자는 인증정보를 전송할 필요 없음
+	// API: 토큰 기반 인증
+	// => 로그인 API로 아이디와 패스워드를 입력 > 토큰 발급 > 로컬 저장소에 저장
+	// => 서버가 세션을 관리하지 않으므로 부담이 없음
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -71,9 +77,9 @@ public class SecurityConfig {
 		// formLogin 비활성화
 		http.formLogin().disable();
 		
-		// UsernamePasswordFilter: 사용자 이름과 비밀번호를 사용하는 시큐리티의 기본 필터
-		// apliCheckFilter가 UsernamePasswordFilter보다 먼저 실행되도록 설정
-		http.addFilterBefore(apliCheckFilter(), 
+		// UsernamePasswordFilter: 폼로그인에서 사용되는 필터
+		// apiCheckFilter가 UsernamePasswordFilter보다 먼저 실행되도록 설정
+		http.addFilterBefore(apiCheckFilter(), 
 							UsernamePasswordAuthenticationFilter.class);
 		
 		/* API 로그인 필터에 필요한 인증 매니저 생성 */

@@ -22,9 +22,10 @@ import net.minidev.json.JSONObject;
 // 요청이 들어오면 JWT 토큰이 유효한지 확인하는 필터
 
 // OncePerRequestFilter 상속받고 doFilterInternal 메소드 구현
-public class ApliCheckFilter extends OncePerRequestFilter {
+public class ApiCheckFilter extends OncePerRequestFilter {
 
 	// 토큰 검사가 필요한 URL 패턴 목록
+	// /login, /register 검사 X
 	String[] patternArr = { "/board/*", "/member/*" };
 
 	// 패턴 검사기
@@ -36,7 +37,7 @@ public class ApliCheckFilter extends OncePerRequestFilter {
 	// 사용자 인증 서비스
 	UserDetailsService userDetailsService;
 
-	public ApliCheckFilter(UserDetailsService userDetailsService) {
+	public ApiCheckFilter(UserDetailsService userDetailsService) {
 		this.antPathMatcher = new AntPathMatcher();
 		this.jwtUtil = new JWTUtil();
 		this.userDetailsService = userDetailsService;
@@ -47,7 +48,7 @@ public class ApliCheckFilter extends OncePerRequestFilter {
 	// response: 사용자에게 전송할 응답메세지를 담을 객체
 	// filterChain: 인증 과정에서 사용되는 필터체인
 
-	// 매 요청마다 호출되어 토큰이 유효한지 확인하는 메소드
+	// API 요청마다 호출되는 함수. 토큰이 유효한지 확인
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
@@ -59,9 +60,9 @@ public class ApliCheckFilter extends OncePerRequestFilter {
 			boolean result = antPathMatcher.match(pattern, request.getRequestURI());
 			if (result == true) {
 
-				System.out.println("ApliCheckFilter...............");
-				System.out.println("ApliCheckFilter...............");
-				System.out.println("ApliCheckFilter...............");
+				System.out.println("ApiCheckFilter...............");
+				System.out.println("ApiCheckFilter...............");
+				System.out.println("ApiCheckFilter...............");
 
 				// 헤더에서 토큰을 꺼내서 검사
 				boolean checkHeader = checkAuthHeader(request);
@@ -77,6 +78,8 @@ public class ApliCheckFilter extends OncePerRequestFilter {
 				if (checkHeader) {
 					
 					// 인증객체를 생성하여 컨테이너에 저장
+					// 이객체는 나중에 Principal라는 이름으로 사용됨
+					// 나중에 로그인한 사용자의 아이디가 필요할 수 있음
 					String username = getUserId(request);
 					UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 					if (userDetails != null) {
@@ -87,11 +90,11 @@ public class ApliCheckFilter extends OncePerRequestFilter {
 						SecurityContextHolder.getContext().setAuthentication(authentication);
 					}
 					
-					// 토큰이 유효하면 필터의 다음 단계로 넘어가기
+					// 토큰이 유효하면 필터의 다음 단계로 넘어가서 인증을 이어가기
 					filterChain.doFilter(request, response);
 					return;
 				} else {
-					// 헤더가 없으면 데이터가 없고, 200코드 정상코드가 반환된다
+					// 토큰 검사에 실패했는데도, 200코드 정상코드가 반환된다
 					// 정상적으로 처리하기 위해 403 메세지를 만들어서 반환한다
 					
 					// 토큰이 유효하지 않으면 403 에러메세지가 전송되고 필터체인이 종료됨
@@ -103,7 +106,7 @@ public class ApliCheckFilter extends OncePerRequestFilter {
 
 					PrintWriter out = response.getWriter();
 					out.print(json);
-					return;
+					return; // 인증 종료
 				}
 
 			}
