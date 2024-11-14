@@ -46,6 +46,8 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
 
+		System.out.println("ApiLoginFilter.....attempt.....");
+		
 		// 메세지 바디에서 로그인 데이터 추출
 		String body = getBody(request);
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -98,7 +100,7 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 
-		System.out.println("---------ApiLoginFilter---------");
+		System.out.println("ApiLoginFilter.....success.....");
 		System.out.println("인증결과: " + authResult);
 		System.out.println("인증객체: " + authResult.getPrincipal());
 

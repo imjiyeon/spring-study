@@ -97,7 +97,7 @@ public class SecurityConfig {
  		// ApiLoginFilter 생성 및 등록
  		// /login 요청이 들어오면 필터가 실행됨
 		ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/login", memberService());	
-		// 나중에 추가
+		// 로그인에 실패했을 때 핸들러가 실행됨
 		apiLoginFilter.setAuthenticationFailureHandler(authenticationFailureHandler());	
 		apiLoginFilter.setAuthenticationManager(authenticationManager);
 

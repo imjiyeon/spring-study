@@ -77,9 +77,10 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 				
 				if (checkHeader) {
 					
-					// 인증객체를 생성하여 컨테이너에 저장
+					// 인증서비스로 로그인을해서 인증객체(User)를 생성
+					// 인증객체를 컨테이너에 저장
 					// 이객체는 나중에 Principal라는 이름으로 사용됨
-					// 나중에 로그인한 사용자의 아이디가 필요할 수 있음
+					// 나중에 로그인한 사용자의 아이디가 필요한 경우에 사용
 					String username = getUserId(request);
 					UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 					if (userDetails != null) {
