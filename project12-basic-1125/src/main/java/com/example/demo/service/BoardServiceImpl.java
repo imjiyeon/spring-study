@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.entity.Board;
 import com.example.demo.repository.BoardRepository;
-import com.example.demo.security.util.FileUtil;
+import com.example.demo.util.FileUtil;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -24,9 +24,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int register(BoardDTO dto) {
 		Board entity = dtoToEntity(dto);
-		repository.save(entity);
+		
 		String imgPath = fileUtil.fileUpload(dto.getUploadFile());
 		entity.setImgPath(imgPath);
+		repository.save(entity);
+		
 		return entity.getNo();
 	}
 
