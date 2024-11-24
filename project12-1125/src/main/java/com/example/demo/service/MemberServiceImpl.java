@@ -6,21 +6,21 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.MemberDTO;
 import com.example.demo.entity.Member;
 import com.example.demo.repository.MemberRepository;
 
-@Service
+//@Service
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberRepository repository;
 	
+	// 필드 추가
 	@Autowired
 	PasswordEncoder passwordEncoder;
-		
+
 	@Override
 	public List<MemberDTO> getList() {
 		
