@@ -29,7 +29,7 @@ public class BoardController {
 	@PostMapping("/register")
 	public ResponseEntity<Integer> register(BoardDTO dto, Principal principal) {
 		
-		System.out.println("principal: " + principal);
+//		System.out.println("principal: " + principal);
 		
 //		dto.setWriter("user"); // 임시 아이디
 		dto.setWriter(principal.getName());
