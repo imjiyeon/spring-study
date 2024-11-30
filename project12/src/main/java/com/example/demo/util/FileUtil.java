@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class FileUtil {
 	
-	//이미지 파일을 저장할 경로
+	// 파일을 저장할 기본 경로
 	@Value("${filepath}")
 	String filepath;
 	

@@ -2,6 +2,8 @@ package com.example.demo.dto;
 
 import java.time.LocalDateTime;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,8 +31,7 @@ public class BoardDTO {
 
 	LocalDateTime modDate; //수정일
 	
-	/* 나중에 필드 추가 */
-//	MultipartFile uploadFile; // 파일 스트림
+	MultipartFile uploadFile; // 파일 스트림
 	
-//	String imgPath; // 파일 이름
+	String imgPath; // 파일 이름
 }

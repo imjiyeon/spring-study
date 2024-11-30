@@ -4,23 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.MemberDTO;
 import com.example.demo.service.MemberService;
 
-/*
- * 인증 서비스
- * loadUserByUsername(로그인함수)를 구현하여 사용자 정보를 조회하고 인증객체를 생성한다
- * */
 
-@Service
+// Spring Security에서 제공하는 UserDetailsService 인터페이스를 상속받아
+// 사용자 인증을 처리하기 위해 만든 클래스
+
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private MemberService service;
 
-	// 사용자 아이디를 기반으로 인증객체를 생성하는 메소드
+	// 사용자 아이디를 기반으로 데이터베이스에서 사용자 정보를 조회하고 인증 객체를 생성
 	@Override
 	public UserDetails loadUserByUsername(String userName) { // userName는 아이디를 의미
 

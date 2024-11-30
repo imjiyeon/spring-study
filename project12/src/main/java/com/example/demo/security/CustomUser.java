@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.User;
 
 import com.example.demo.dto.MemberDTO;
 
-// 사용자 정보를 담고 있는 인증 객체
-
+// Spring Security에서 제공하는 User 클래스 상속받아
+// 사용자 인증 정보를 저장하기 위해 만든 클래스
 public class CustomUser extends User {
 
   public CustomUser(MemberDTO dto) {

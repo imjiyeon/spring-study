@@ -19,12 +19,14 @@ public class MemberController {
 	@Autowired
     MemberService service;
 
+	//localhost:8080/register + 바디(JSON데이터)
 	@PostMapping("/register")
 	public ResponseEntity<Boolean> register(@RequestBody MemberDTO dto) {
 		boolean result = service.register(dto);
 		return new ResponseEntity<>(result, HttpStatus.CREATED); //201성공코드와 처리결과 반환
 	}
 
+	//localhost:8080/member/list
 	@GetMapping("/member/list")
 	public ResponseEntity<List<MemberDTO>> getList() {
 		List<MemberDTO> list = service.getList();

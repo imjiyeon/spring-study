@@ -27,6 +27,7 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 	// 토큰 검사가 필요한 URL 패턴 목록
 	// /login, /register 검사 X
 	String[] patternArr = { "/board/*", "/member/*" };
+//	String[] patternArr = { };
 
 	// 패턴 검사기
 	AntPathMatcher antPathMatcher;
@@ -124,7 +125,7 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 
 		// 값이 있는지 확인
 		if (StringUtils.hasText(authHeader)) {
-//			System.out.println("Authorization: " + authHeader);
+			System.out.println("Authorization: " + authHeader);
 //			if (authHeader.equals("1234")) {
 //				// 인증에 성공했으면 true 반환
 //				return true;

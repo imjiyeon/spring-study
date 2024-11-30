@@ -25,7 +25,7 @@ public class JWTUtilTest {
 		JWTUtil jwtUtil = new JWTUtil();
 
 		// 위에서 생성한 토큰을 입력
-		String token = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzE0MTg3NzIsImV4cCI6MTczMTQxODgzMiwic3ViIjoidXNlciJ9.dyySUNeo96C5EYJNGO5bCQoAL-IylzyNzu7I0nPF0r4";
+		String token = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzI0NTIzNTAsImV4cCI6MTczNTA0NDM1MCwic3ViIjoidXNlciJ9.sVBxy0GDppanZ2L9vxcswYlTuk-inH_MHl9KbMFGvRY";
 
 		// 토큰에서 아이디 추출
 		String id = jwtUtil.validateAndExtract(token);

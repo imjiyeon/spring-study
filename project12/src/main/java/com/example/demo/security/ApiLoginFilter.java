@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,27 +22,33 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import net.minidev.json.JSONObject;
 
-// API 로그인 필터 클래스
-// 로그인 요청이 들어오면 아이디와 패스워드를 검증하여, JWT 토큰을 발급
+// Spring Security에서 제공하는 AbstractAuthenticationProcessingFilter 클래스 상속받아
+// 로그인을 처리하기 위해 만든 클래스
 
 public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 
-	// JWT 유틸
+	// 인증토큰을 생성하는 유틸 클래스
 	JWTUtil jwtUtil;
 
-	// 사용자 정보를 조회하기 위해 선언
+	// 사용자 정보를 조회하는 서비스
+	@Autowired // 나중에 삭제
 	MemberService memberService;
 
-	// 생성자
-	// 로그인 URL 경로와 필요한 서비스 초기화
+	// 생성자: 로그인 API의 주소를 설정하고, 로그인을 처리하기 위해 필요한 서비스 초기화
+//	public ApiLoginFilter(String defaultFilterProcessesUrl) {
+//		super(defaultFilterProcessesUrl);
+//		this.jwtUtil = new JWTUtil();
+//	}
+	
 	public ApiLoginFilter(String defaultFilterProcessesUrl, MemberService memberService) {
 		super(defaultFilterProcessesUrl);
 		this.jwtUtil = new JWTUtil();
 		this.memberService = memberService;
 	}
 
-	// 로그인 요청 시 아이디와 패스워드를 확인하는 메소드
+	// 로그인 요청이 들어오면 아이디와 패스워드 확인하여 로그인 성공 처리
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
@@ -138,6 +145,23 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException failed) throws IOException, ServletException {
+		// TODO Auto-generated method stub
+		// super 제거
+//		super.unsuccessfulAuthentication(request, response, failed);
+		
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		response.setContentType("application/json;charset=utf-8");
+		JSONObject json = new JSONObject();
+		json.put("code", "401");
+		json.put("message", failed.getMessage());
+
+		PrintWriter out = response.getWriter();
+		out.print(json);
 	}
 
 }

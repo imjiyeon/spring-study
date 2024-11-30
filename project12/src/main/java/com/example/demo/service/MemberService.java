@@ -7,13 +7,12 @@ import com.example.demo.entity.Member;
 
 public interface MemberService {
 	
-	List<MemberDTO> getList(); //회원 목록조회
+	List<MemberDTO> getList();
 	
-	boolean register(MemberDTO dto); //회원 등록
+	boolean register(MemberDTO dto);
 
-	MemberDTO read(String id); //회원 단건 조회
+	MemberDTO read(String id);
 	
-	//엔티티를 DTO로 변환하는 메소드
 	default MemberDTO entityToDto(Member entity) {
 		MemberDTO dto = MemberDTO.builder()
 				.id(entity.getId())
@@ -27,7 +26,6 @@ public interface MemberService {
 		return dto;
 	}
 
-	//DTO를 엔티티로 변환하는 메소드
 	default Member dtoToEntity(MemberDTO dto) {
 		Member entity = Member.builder()
 				.id(dto.getId())

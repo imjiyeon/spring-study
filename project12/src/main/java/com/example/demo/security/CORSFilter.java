@@ -29,6 +29,9 @@ public class CORSFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		// CORS 관련 헤더를 응답 메세지에 추가
+		
+		// localhost:3000에서 오는 요청을 허용
+//		response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");	
 		response.setHeader("Access-Control-Allow-Origin", "*"); // 모든 도메인에서의 요청을 허용
 		response.setHeader("Access-Control-Allow-Credentials", "true"); // 자격 증명을 포함한 요청을 허용
 		response.setHeader("Access-Control-Allow-Methods", "*"); // 모든 HTTP 메서드를 허용
