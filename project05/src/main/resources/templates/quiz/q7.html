@@ -14,8 +14,8 @@
 		border-collapse: collapse;
     }
     /* CSS 추가 */
-    .target {
-		color: red; /* 텍스트 색상 설정 */
+    .red {
+		color: red;
 	}
   </style>
 </head>
@@ -27,16 +27,15 @@
     <th>나이</th>
     <th>주소</th>
   </tr>
-  
-  <th:block th:each="dto : ${list}">
-    <tr>
-      <td>[[${dto.name}]]</td>
-      <!-- 나이가 30살 이상이면 'target' 클래스 적용 -->
-      <td th:class="${dto.age>=30}?target:''">[[${dto.age}]]</td>
-      <td>[[${dto.address}]]</td>
-    </tr>
-  </th:block>
-  
+
+  <!-- tr 태그에 반복문 적용 -->
+  <tr th:each="dto : ${list}">
+    <td>[[${dto.name}]]</td>
+    <!-- 나이가 30살 이상이면 'red' 클래스 적용 -->
+    <td th:class=" ${dto.age>=30} ? red : '' ">[[${dto.age}]]</td>
+    <td>[[${dto.address}]]</td>
+  </tr>
+
 </table>
 
 </body>
