@@ -25,6 +25,18 @@ public class ParamController2 {
 		return "ok";
 	}
 
+	/*
+	 * spring은 기본적으로 html 파일을 반환하지만,
+	 * @ResponseBody을 사용하면 순수한 데이터를 반환한다
+	 * 사용자는 요청의 결과로 ok라는 문자열을 응답받는다
+	 * */
+
+	/*
+	* 사용자가 전달한 파라미터는 매개변수로 수집한다
+	* 파라미터가 여러개일 때는 &기호로 연결한다
+	* URL을 작성할때 파라미터명은 매개변수의 파라미터명과 같아야 한다
+	* */
+
 	//추가 파라미터는 &로 구분하기
 	//localhost:8080/param2/ex2?i=100&c=a
 	@ResponseBody
