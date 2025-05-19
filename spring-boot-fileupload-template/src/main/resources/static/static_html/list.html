@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+-
+    <span>
+        <a href="#">
+            <button type="button" class="btn btn-outline-primary"> 게시물 등록</button>
+        </a>
+    </span>
+</h1>
+
+<table class="table table-striped">
+    <!-- 부트스트랩의 스타일 적용 -->
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>등록일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>1</th>
+        <td>1번글</td>
+        <td>둘리</td>
+        <td>2023/02/21</td>
+    </tr>
+    <tr>
+        <th>2</th>
+        <td>2번글</td>
+        <td>또치</td>
+        <td>2023/02/21</td>
+    </tr>
+    <tr>
+        <th>3</th>
+        <td>3번글</td>
+        <td>도우너</td>
+        <td>2023/02/21</td>
+    </tr>
+    </tbody>
+
+</table>
+
+<!-- 주석 해제: ctrl + shift + \ -->
+<!-- 주석을 하나씩 해제하세요! -->
+
+<!-- 1. 페이지 번호 목록 생성 -->
+<!--<ul class="pagination h-100 justify-content-center align-items-center">
+	<li class="page-item active">
+	<a class="page-link" href="">1</a>
+	</li>
+	<li class="page-item">
+	<a class="page-link" href="">2</a>
+	</li>
+	<li class="page-item">
+	<a class="page-link" href="">3</a>
+	</li>
+</ul>-->
+
+<!-- 2. 전달받은 전체 페이지 수를 이용하여 페이지 번호 목록을 자동으로 생성 -->
+<!-- numbers 객체를 사용하여 1부터 3까지 목록 생성 [1,2,3] -->
+<!--<th:block th:each="page : ${#numbers.sequence(1, list.totalPages)}">
+	[[${page}]]
+</th:block>-->
+
+<!-- 3. 페이지 번호 목록 생성 및 'active' 클래스 적용 -->
+<!-- if문에서 list.number는 현재페이지 번호, page는 페이지 번호 목록 -->
+<!-- 현재 페이지 번호에 'active' 클래스 추가 -->
+<!-- 주소에서 page 번호 바꿔서 테스트! -->
+<!--<ul class="pagination h-100 justify-content-center align-items-center">
+	<th:block th:each="page : ${#numbers.sequence(1, list.totalPages)}">
+		<th:block th:if="${list.number+1 == page}">
+			<li class="page-item active">
+			<a class="page-link" href="">[[${page}]]</a>
+			</li>
+		</th:block>
+		<th:block th:unless="${list.number+1 == page}">
+			<li class="page-item">
+			<a class="page-link" href="">[[${page}]]</a>
+			</li>
+		</th:block>
+	</th:block>
+</ul>-->
+
+<!-- 4. 페이지 번호를 클릭하면 해당 페이지로 이동하도록 처리 (최종) -->
+<!-- a 태그에 list 주소를 입력하고, 선택한 페이지 번호를 파라미터로 전달 -->
+<!--<ul class="pagination h-100 justify-content-center align-items-center">
+	<th:block th:each="page : ${#numbers.sequence(1, list.totalPages)}">
+		<th:block th:if="${list.number+1 == page}">
+			<li class="page-item active">					
+			<a class="page-link" th:href="@{/board/list(page = ${page})}">[[${page}]]</a>
+			</li>
+		</th:block>
+		<th:block th:unless="${list.number+1 == page}">
+			<li class="page-item">
+			<a class="page-link" th:href="@{/board/list(page = ${page})}">[[${page}]]</a>
+			</li>
+		</th:block>
+	</th:block>
+</ul>-->
+
+<!--
+<script th:inline="javascript">
+</script>
+-->
