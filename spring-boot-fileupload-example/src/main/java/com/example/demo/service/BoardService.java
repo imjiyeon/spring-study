@@ -27,6 +27,7 @@ public interface BoardService {
 		return entity;
 	}
 
+	// 변환 메소드 수정
 	default BoardDTO entityToDto(Board entity) {
 		BoardDTO dto = BoardDTO.builder()
 				.no(entity.getNo())
@@ -35,6 +36,7 @@ public interface BoardService {
 				.writer(entity.getWriter())
 				.regDate(entity.getRegDate())
 				.modDate(entity.getModDate())
+				.imgFileName(entity.getImgFileName()) // 이미지 파일 이름 추가
 				.build();
 		return dto;
 	}

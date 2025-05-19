@@ -5,8 +5,10 @@
     <th:block th:fragment="content">
 
         <h1 class="mt-4">Board Register Page</h1>
-
-        <form th:action="@{/board/register}" th:method="post">
+			
+		<!-- enctype 속성을 추가해야 파일스트림이 전달됨 -->
+        <form th:action="@{/board/register}" th:method="post" enctype="multipart/form-data">	
+       <!--  <form th:action="@{/board/register}" th:method="post"> -->
 
             <div class="form-group">
                 <label >제목</label>
@@ -20,6 +22,12 @@
                 <label >작성자</label>
                 <input type="text" class="form-control" name="writer">
             </div>
+            
+            <!-- 첨부파일 입력필드 추가 -->
+            <div class="form-group">
+				<label>첨부파일</label>
+				<input type="file" class="form-control" name="uploadFile"/>
+			</div>
 
             <button type="submit" class="btn btn-primary">등록</button>
         </form>

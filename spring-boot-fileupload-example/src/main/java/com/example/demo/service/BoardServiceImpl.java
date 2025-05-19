@@ -12,18 +12,33 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.BoardDTO;
 import com.example.demo.entity.Board;
 import com.example.demo.repository.BoardRepository;
+import com.example.demo.util.FileUtil;
 
 @Service
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	BoardRepository repository;
+	
+	// 파일 유틸 클래스를 필드로 추가
+	@Autowired
+	FileUtil fileUtil;
 
 	@Override
 	public int register(BoardDTO dto) {
-
+		
+		// dto를 entity로 변환
 		Board entity = dtoToEntity(dto);
+		
+		// 업로드된 파일을 컴퓨터에 저장하고, 저장된 파일 이름을 반환
+		String fileName = fileUtil.fileUpload(dto.getUploadFile());
+		
+		// 반환받은 파일 이름을 엔티티에 저장
+		entity.setImgFileName(fileName);
+		
+		// 새로운 게시물 정보를 테이블에 저장
 		repository.save(entity);
+
 		int newNo = entity.getNo();
 
 		return newNo;
