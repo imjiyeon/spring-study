@@ -31,6 +31,30 @@
             <label >수정일</label>
             <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
         </div>
+        
+        <!-- 이미지 필드 추가 -->
+        <div class="form-group">
+        	
+        	<!-- 이미지 태그를 추가하고, 이미지 파일 경로 작성 -->
+        	<!-- 에러남. 보안문제로 외부 폴더에 직접 접근 불가 -->
+        	<!-- <img alt="" src="D:\\imjiyeon\\spring-workspace\\spring-study\\spring-boot-fileupload-example\\src\\main\\resources\\static\\image\\AA.png"> -->
+        	<!-- 웹루트로 이미지 폴더에 접근 -->
+        	<!-- 웹루트: 스프링 부트가 static 경로를 매핑한 것 -->
+        	<!-- <img alt="" src="/image/AA.png"> -->
+        	
+        	<!-- 테이블에 있는 해당 게시물의 파일 꺼내기 -->
+<!--         	[[ ${dto} ]]
+        	[[ ${dto.imgFileName} ]]
+        	[[ '/image/' + ${dto.imgFileName} ]] -->
+        	<!-- @{ URL 표현식 } -->
+        	<!-- ${ 변수표현식 } -->
+        	<!-- <img alt="" th:src="@{'/image/' + ${dto.imgFileName}}"> -->
+        	
+        	<!-- 매핑 경로 -->
+        	<img alt="" th:src="@{'/upload/' + ${dto.imgFileName}}" style="width:200px" class="img-thumbnail">
+        	
+
+        </div>
 
         <a th:href="@{/board/modify(no = ${dto.no})}">
         	<button type="button" class="btn btn-primary">수정</button>

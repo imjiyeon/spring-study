@@ -31,10 +31,12 @@ public class BoardDTO {
     
     LocalDateTime modDate;
      
-    // 파일 업로드를 위한 새로운 필드 추가!
-	MultipartFile uploadFile; // 파일 스트림
+    // 사용자가 업로드한 파일을 담는 객체
+    // 파일의 내용과 메타데이터(파일명, 크기, 타입(예:img, txt, dir))을 포함
+	MultipartFile uploadFile; 
 	
-	String imgFileName; // 이미지 파일 이름
+	// 이미지 파일 이름
+	String imgFileName; 
 
 }
 
